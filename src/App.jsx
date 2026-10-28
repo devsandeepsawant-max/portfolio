@@ -253,30 +253,61 @@ export default function App() {
             style={{ animationDelay: '3.5s' }}
           ></div>
 
-          {/* Spaceship Crossing the Hero Section */}
+          {/* Realistic High-Detail Spaceship Crossing Hero Section */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden z-20">
-            <div className="animate-spaceship absolute flex items-center">
-              {/* Spaceship Rocket Body */}
+            <div className="animate-spaceship-real absolute flex items-center">
+              {/* Spaceship Body & Engine */}
               <div className="relative">
-                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" className="transform -rotate-45 drop-shadow-[0_0_12px_rgba(56,189,248,0.8)]">
-                  <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" fill={isDark ? '#38bdf8' : '#0284c7'} />
-                  <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" fill={isDark ? '#e0f2fe' : '#ffffff'} stroke={isDark ? '#38bdf8' : '#0284c7'} strokeWidth="1.5" />
-                  <circle cx="15.5" cy="8.5" r="1.75" fill={isDark ? '#0284c7' : '#38bdf8'} />
-                  <path d="M9 18c-4.51 2-5-2-7-2" stroke={isDark ? '#f43f5e' : '#e11d48'} strokeWidth="1.5" strokeLinecap="round" />
-                  <path d="M6 15c-2 4.51 2 5 2 7" stroke={isDark ? '#f43f5e' : '#e11d48'} strokeWidth="1.5" strokeLinecap="round" />
+                <svg width="76" height="76" viewBox="0 0 64 64" fill="none" className="transform -rotate-45 drop-shadow-[0_0_20px_rgba(56,189,248,0.7)]">
+                  {/* Outer Main Fuselage */}
+                  <path d="M60 4C50 7 24 18 16 34L26 44C42 36 53 10 60 4Z" fill={isDark ? '#0f172a' : '#ffffff'} stroke={isDark ? '#38bdf8' : '#0284c7'} strokeWidth="2" strokeLinejoin="round" />
+                  
+                  {/* Cockpit Canopy Window */}
+                  <path d="M42 16C36 21 33 26 31 31L35 35C40 33 45 30 50 24L42 16Z" fill={isDark ? '#38bdf8' : '#0284c7'} opacity="0.9" />
+                  <path d="M40 18L47 25" stroke="#ffffff" strokeWidth="1" strokeLinecap="round" opacity="0.8" />
+                  
+                  {/* Upper Aerodynamic Wing */}
+                  <path d="M26 21L10 18L18 29L26 21Z" fill={isDark ? '#1e293b' : '#f1f5f9'} stroke={isDark ? '#38bdf8' : '#0284c7'} strokeWidth="1.5" />
+                  
+                  {/* Lower Stabilizer Wing */}
+                  <path d="M39 34L42 50L31 42L39 34Z" fill={isDark ? '#1e293b' : '#f1f5f9'} stroke={isDark ? '#38bdf8' : '#0284c7'} strokeWidth="1.5" />
+                  
+                  {/* Rocket Engine Nozzle */}
+                  <path d="M16 34L12 40L20 48L26 44L16 34Z" fill={isDark ? '#334155' : '#cbd5e1'} stroke={isDark ? '#94a3b8' : '#64748b'} strokeWidth="1.5" />
+                  
+                  {/* Ion Thruster Glow Ring */}
+                  <circle cx="16" cy="44" r="3" fill="#38bdf8" />
                 </svg>
-                {/* Engine Jet Flame with dynamic glow */}
-                <div className="absolute -bottom-1 -left-4 w-7 h-3 rounded-full bg-gradient-to-r from-transparent via-amber-400 to-rose-500 blur-[1px] animate-pulse"></div>
+
+                {/* Plasma Jet Fire Flare with Dynamic Flicker */}
+                <div className="absolute -bottom-2 -left-8 w-14 h-5 rounded-full bg-gradient-to-r from-transparent via-cyan-400 via-amber-400 to-rose-500 blur-[2px] animate-thruster"></div>
+                <div className="absolute -bottom-1 -left-4 w-7 h-3 rounded-full bg-white blur-[1px] animate-pulse"></div>
               </div>
 
-              {/* Warp Speed Jet Trail / Exhaust */}
+              {/* Extended Hyperspace Plasma Trail */}
               <div 
-                className={`h-[2px] w-48 -ml-3 rounded-full ${
+                className={`h-[3px] w-80 -ml-4 rounded-full ${
                   isDark 
-                    ? 'bg-gradient-to-l from-transparent via-[#38bdf8]/60 to-transparent shadow-[0_0_8px_#38bdf8]' 
-                    : 'bg-gradient-to-l from-transparent via-[#0284c7]/50 to-transparent shadow-[0_0_8px_#0284c7]'
+                    ? 'bg-gradient-to-l from-transparent via-[#38bdf8]/80 to-transparent shadow-[0_0_12px_#38bdf8]' 
+                    : 'bg-gradient-to-l from-transparent via-[#0284c7]/70 to-transparent shadow-[0_0_12px_#0284c7]'
                 }`}
               ></div>
+            </div>
+
+            {/* Falling Comet Streaking from Top-Right to Bottom-Left */}
+            <div className="animate-comet absolute flex items-center">
+              {/* Comet Head Core */}
+              <div className="relative">
+                <div className="w-4 h-4 rounded-full bg-white shadow-[0_0_16px_#38bdf8] flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-[#38bdf8]"></div>
+                </div>
+              </div>
+              {/* Comet Glowing Tail */}
+              <div className={`h-[3px] w-64 -ml-1 rounded-full ${
+                isDark 
+                  ? 'bg-gradient-to-r from-white via-[#38bdf8]/80 to-transparent shadow-[0_0_14px_rgba(56,189,248,0.7)]' 
+                  : 'bg-gradient-to-r from-[#0284c7] via-[#38bdf8]/70 to-transparent shadow-[0_0_14px_rgba(2,132,199,0.7)]'
+              }`}></div>
             </div>
           </div>
 
@@ -307,15 +338,6 @@ export default function App() {
               </svg>
             </div>
           ))}
-
-          {/* Floating Orbit Graphic */}
-          <div className={`absolute top-20 right-10 lg:right-28 w-64 h-64 border rounded-full animate-float pointer-events-none ${
-            isDark ? 'border-[#38bdf8]/20' : 'border-[#0284c7]/30'
-          }`}>
-            <div className={`w-3.5 h-3.5 rounded-full absolute top-2 left-10 ${
-              isDark ? 'bg-[#38bdf8] shadow-[0_0_12px_#38bdf8]' : 'bg-[#0284c7] shadow-[0_0_12px_rgba(2,132,199,0.7)]'
-            }`}></div>
-          </div>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">

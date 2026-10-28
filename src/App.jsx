@@ -1,519 +1,503 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { 
+  ArrowUpRight, 
+  Mail, 
+  MapPin, 
+  Briefcase, 
+  GraduationCap, 
+  CheckCircle2, 
+  Layers, 
+  Zap, 
+  Sliders, 
+  ArrowRight,
+  Code2,
+  Terminal,
+  ExternalLink
+} from 'lucide-react';
 
-export default function App() {
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('sandeep-portfolio-theme') || 'dark';
-  });
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
-
-  // Update theme on html element and persist
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('sandeep-portfolio-theme', theme);
-  }, [theme]);
-
-  // Handle active section on scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = document.querySelectorAll('section[id]');
-      const scrollY = window.pageYOffset;
-
-      sections.forEach((current) => {
-        const sectionHeight = current.offsetHeight;
-        const sectionTop = current.offsetTop - 140;
-        const sectionId = current.getAttribute('id');
-
-        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-          setActiveSection(sectionId);
-        }
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
-  };
-
-  const closeMenu = () => setMenuOpen(false);
-
+function LinkedinIcon({ className = "w-4 h-4" }) {
   return (
-    <>
-      {/* Navigation */}
-      <header className="header">
-        <div className="container nav-container">
-          <a href="#hero" className="brand" aria-label="Sandeep Sawant Home" onClick={closeMenu}>
-            <div className="avatar-badge" aria-hidden="true">SS</div>
-            <div className="brand-text">
-              <span className="brand-name">Sandeep Sawant</span>
-              <span className="brand-role">Senior React Developer</span>
-            </div>
-          </a>
-
-          <button
-            id="menu-toggle"
-            className={`menu-toggle ${menuOpen ? 'active' : ''}`}
-            aria-label="Toggle navigation menu"
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-
-          <nav className={`nav-menu ${menuOpen ? 'open' : ''}`} id="nav-menu">
-            <ul className="nav-list">
-              <li>
-                <a
-                  href="#about"
-                  className={`nav-link ${activeSection === 'about' ? 'active' : ''}`}
-                  onClick={closeMenu}
-                >
-                  About
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#work"
-                  className={`nav-link ${activeSection === 'work' ? 'active' : ''}`}
-                  onClick={closeMenu}
-                >
-                  Featured Work
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#experience"
-                  className={`nav-link ${activeSection === 'experience' ? 'active' : ''}`}
-                  onClick={closeMenu}
-                >
-                  Experience
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#skills"
-                  className={`nav-link ${activeSection === 'skills' ? 'active' : ''}`}
-                  onClick={closeMenu}
-                >
-                  Skills
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#education"
-                  className={`nav-link ${activeSection === 'education' ? 'active' : ''}`}
-                  onClick={closeMenu}
-                >
-                  Education
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#contact"
-                  className={`nav-link ${activeSection === 'contact' ? 'active' : ''}`}
-                  onClick={closeMenu}
-                >
-                  Contact
-                </a>
-              </li>
-            </ul>
-            <button
-              id="theme-toggle"
-              className="theme-toggle-btn"
-              onClick={toggleTheme}
-              aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
-            >
-              <span id="theme-icon" aria-hidden="true">
-                {theme === 'dark' ? '☀️' : '🌙'}
-              </span>
-              <span className="theme-text">Theme</span>
-            </button>
-          </nav>
-        </div>
-      </header>
-
-      <main>
-        {/* Hero Section */}
-        <section id="hero" className="hero-section">
-          <div className="container hero-container">
-            <div className="status-badge">
-              <span className="status-dot"></span>
-              <span>Available for select freelance &amp; senior frontend projects</span>
-            </div>
-            <h1 className="hero-title">
-              Senior React.js Developer &amp; <span className="highlight-text">Frontend Architect</span>
-            </h1>
-            <p className="hero-subtitle">
-              I help businesses ship fast, scalable web apps that load quickly, convert better, and achieve 95+ Core Web Vitals scores. Based in Kalyan / Thane, Mumbai &amp; working remotely worldwide.
-            </p>
-
-            <div className="hero-actions">
-              <a href="mailto:devsandeepsawant@gmail.com" className="btn btn-primary">
-                <span>Get in Touch</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-              </a>
-              <a href="https://www.linkedin.com/in/sandeep-sawant-developer/" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
-                <span>LinkedIn Profile</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                  <polyline points="15 3 21 3 21 9"></polyline>
-                  <line x1="10" y1="14" x2="21" y2="3"></line>
-                </svg>
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* About Section */}
-        <section id="about" className="about-section">
-          <div className="container">
-            <div className="section-header">
-              <span className="section-tag">About Me</span>
-              <h2 className="section-title">Performance-First Frontend Engineering</h2>
-            </div>
-
-            <div className="about-card">
-              <div className="about-quote">
-                <p>
-                  "Slow frontends lose customers. I build Web applications that load fast, scale cleanly and convert better. After 18+ years and 50+ production apps for various industries, including performance optimisation, I take on a few new projects a quarter. If your site feels slow or hard to change, message me."
-                </p>
-              </div>
-
-              <div className="stats-grid">
-                <div className="stat-item">
-                  <span className="stat-number">18+</span>
-                  <span className="stat-label">Years Experience</span>
-                </div>
-                <div className="stat-item">
-                  <span className="stat-number">50+</span>
-                  <span className="stat-label">Production Apps</span>
-                </div>
-                <div className="stat-item">
-                  <span className="stat-number">95+</span>
-                  <span className="stat-label">Lighthouse &amp; CWV</span>
-                </div>
-                <div className="stat-item">
-                  <span className="stat-number">25%</span>
-                  <span className="stat-label">Speed Increase</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Featured Work Section */}
-        <section id="work" className="work-section">
-          <div className="container">
-            <div className="section-header">
-              <span className="section-tag">Featured Work</span>
-              <h2 className="section-title">Real-World Project Highlights</h2>
-              <p className="section-desc">Key engineering milestones delivered across clients and industry platforms.</p>
-            </div>
-
-            <div className="cards-grid">
-              <article className="card">
-                <div className="card-badge">Freelance Client</div>
-                <h3 className="card-title">High-Performance React Web Applications</h3>
-                <p className="card-location">Dubai, UAE · Remote</p>
-                <p className="card-text">
-                  Built and maintained robust React.js applications for a prominent Dubai-based client, focusing extensively on responsive user interfaces, frontend architecture, and performance optimization for demanding web users.
-                </p>
-                <div className="tag-group">
-                  <span className="tag">React.js</span>
-                  <span className="tag">Performance</span>
-                  <span className="tag">Responsive UI</span>
-                  <span className="tag">Architecture</span>
-                </div>
-              </article>
-
-              <article className="card">
-                <div className="card-badge">Technical Leadership</div>
-                <h3 className="card-title">Scalable Travel &amp; E-Commerce Web Platforms</h3>
-                <p className="card-location">Sublimis Technologies</p>
-                <p className="card-text">
-                  Directed a team of 6 frontend developers delivering 3+ ReactJS platforms for travel and e-commerce clients. Spearheaded systematic refactoring that increased page load speed by 25% and reduced runtime errors by 30%.
-                </p>
-                <div className="tag-group">
-                  <span className="tag">ReactJS</span>
-                  <span className="tag">Team Leadership</span>
-                  <span className="tag">E-Commerce</span>
-                  <span className="tag">Refactoring</span>
-                  <span className="tag">95% On-Time Delivery</span>
-                </div>
-              </article>
-
-              <article className="card">
-                <div className="card-badge">Standards &amp; Optimization</div>
-                <h3 className="card-title">Core Web Vitals &amp; Web Accessibility (WCAG)</h3>
-                <p className="card-location">Enterprise Best Practices</p>
-                <p className="card-text">
-                  Engineered web applications to achieve consistent 95+ Google Lighthouse scores and strict Core Web Vitals compliance. Implemented SEO standards and WCAG accessibility, driving a 15% increase in organic search traffic.
-                </p>
-                <div className="tag-group">
-                  <span className="tag">WCAG Standards</span>
-                  <span className="tag">Core Web Vitals</span>
-                  <span className="tag">Lighthouse 95+</span>
-                  <span className="tag">SEO Best Practices</span>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        {/* Experience Timeline Section */}
-        <section id="experience" className="experience-section">
-          <div className="container">
-            <div className="section-header">
-              <span className="section-tag">Career History</span>
-              <h2 className="section-title">18+ Years of Proven Experience</h2>
-              <p className="section-desc">A timeline of leadership, frontend engineering, and successful delivery.</p>
-            </div>
-
-            <div className="timeline">
-              <div className="timeline-item">
-                <div className="timeline-marker"></div>
-                <div className="timeline-content">
-                  <div className="timeline-header">
-                    <span className="timeline-period">October 2024 – Present</span>
-                    <span className="timeline-company">Freelance</span>
-                  </div>
-                  <h3 className="timeline-role">Frontend Developer</h3>
-                  <p className="timeline-location">Thane, Maharashtra, India · Remote</p>
-                  <p className="timeline-desc">
-                    Built and maintained React.js applications for a Dubai-based client, focusing on performance optimization, scalable component design, and responsive UI.
-                  </p>
-                </div>
-              </div>
-
-              <div className="timeline-item">
-                <div className="timeline-marker"></div>
-                <div className="timeline-content">
-                  <div className="timeline-header">
-                    <span className="timeline-period">March 2020 – September 2024 (4 yrs 7 mos)</span>
-                    <span className="timeline-company">Sublimis Technologies</span>
-                  </div>
-                  <h3 className="timeline-role">Technical Lead - Frontend Developer</h3>
-                  <p className="timeline-location">Thane, Maharashtra, India</p>
-                  <ul className="timeline-bullets">
-                    <li>Directed a team of 6 frontend developers, delivering 3+ ReactJS applications for travel and e-commerce clients.</li>
-                    <li>Optimized frontend performance, increasing load speed by 25% and reducing errors by 30% through code refactoring.</li>
-                    <li>Boosted organic traffic by 15% by applying SEO best practices and accessibility standards.</li>
-                    <li>Achieved consistent 95+ Lighthouse scores and Core Web Vitals compliance, improving search rankings and retention.</li>
-                    <li>Partnered with stakeholders and backend teams, maintaining a 95% on-time delivery rate.</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="timeline-item">
-                <div className="timeline-marker"></div>
-                <div className="timeline-content">
-                  <div className="timeline-header">
-                    <span className="timeline-period">September 2014 – October 2019 (5 yrs 2 mos)</span>
-                    <span className="timeline-company">Cox &amp; Kings</span>
-                  </div>
-                  <h3 className="timeline-role">Team Leader</h3>
-                  <p className="timeline-location">Mumbai Metropolitan Region</p>
-                  <p className="timeline-desc">
-                    Led frontend engineering and web development teams utilizing HTML5, CSS3, and jQuery to deliver customer-facing digital travel platforms.
-                  </p>
-                </div>
-              </div>
-
-              <div className="timeline-item">
-                <div className="timeline-marker"></div>
-                <div className="timeline-content">
-                  <div className="timeline-header">
-                    <span className="timeline-period">November 2013 – July 2014 (9 mos)</span>
-                    <span className="timeline-company">Asentech India Pvt. Ltd.</span>
-                  </div>
-                  <h3 className="timeline-role">UI Designer</h3>
-                  <p className="timeline-location">Mumbai Metropolitan Region</p>
-                  <p className="timeline-desc">
-                    Combined creative UI design with frontend development. Created digital media and banner designing for the election campaign of Mr. Narendra Modi and built the official website for Himachal Pradesh MP Mr. Anurag Thakur.
-                  </p>
-                </div>
-              </div>
-
-              <div className="timeline-item">
-                <div className="timeline-marker"></div>
-                <div className="timeline-content">
-                  <div className="timeline-header">
-                    <span className="timeline-period">November 2006 – November 2013 (7 yrs 1 mo)</span>
-                    <span className="timeline-company">ImageOnline Pvt. Ltd.</span>
-                  </div>
-                  <h3 className="timeline-role">Sr. Web Developer</h3>
-                  <p className="timeline-location">Mumbai</p>
-                  <p className="timeline-desc">
-                    Started professional web development career with a specialized website development firm, delivering numerous end-to-end client websites over 7+ years.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Skills Section */}
-        <section id="skills" className="skills-section">
-          <div className="container">
-            <div className="section-header">
-              <span className="section-tag">Technical Arsenal</span>
-              <h2 className="section-title">Skills &amp; Specializations</h2>
-              <p className="section-desc">Practical expertise refined across 18+ years in frontend development.</p>
-            </div>
-
-            <div className="skills-grid">
-              <div className="skill-category">
-                <h3 className="skill-category-title">
-                  <span className="category-icon" aria-hidden="true">⚡</span>
-                  Frontend &amp; Frameworks
-                </h3>
-                <div className="tag-group">
-                  <span className="tag">React.js</span>
-                  <span className="tag">JavaScript (ES6+)</span>
-                  <span className="tag">HTML5</span>
-                  <span className="tag">CSS3</span>
-                  <span className="tag">Sass</span>
-                  <span className="tag">jQuery</span>
-                </div>
-              </div>
-
-              <div className="skill-category">
-                <h3 className="skill-category-title">
-                  <span className="category-icon" aria-hidden="true">🚀</span>
-                  Performance &amp; Architecture
-                </h3>
-                <div className="tag-group">
-                  <span className="tag">Performance Optimization</span>
-                  <span className="tag">Frontend Architecture</span>
-                  <span className="tag">Core Web Vitals</span>
-                  <span className="tag">Lighthouse 95+ Scores</span>
-                  <span className="tag">Code Refactoring</span>
-                  <span className="tag">SEO Best Practices</span>
-                </div>
-              </div>
-
-              <div className="skill-category">
-                <h3 className="skill-category-title">
-                  <span className="category-icon" aria-hidden="true">🎨</span>
-                  Design &amp; Accessibility
-                </h3>
-                <div className="tag-group">
-                  <span className="tag">Web Accessibility (WCAG)</span>
-                  <span className="tag">Figma</span>
-                  <span className="tag">Responsive Web Design</span>
-                  <span className="tag">UI Design</span>
-                  <span className="tag">Cross-Browser Compatibility</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Education Section */}
-        <section id="education" className="education-section">
-          <div className="container">
-            <div className="section-header">
-              <span className="section-tag">Background</span>
-              <h2 className="section-title">Education &amp; Certification</h2>
-            </div>
-
-            <div className="edu-grid">
-              <div className="edu-card">
-                <div className="edu-icon" aria-hidden="true">🎓</div>
-                <div className="edu-details">
-                  <span className="edu-year">2013 – 2015</span>
-                  <h3 className="edu-degree">BCA, Information Technology Project Management</h3>
-                  <p className="edu-school">MG University</p>
-                </div>
-              </div>
-
-              <div className="edu-card">
-                <div className="edu-icon" aria-hidden="true">🎓</div>
-                <div className="edu-details">
-                  <span className="edu-year">2000 – 2005</span>
-                  <h3 className="edu-degree">Bachelor's Degree, English Literature</h3>
-                  <p className="edu-school">Mumbai University Mumbai</p>
-                </div>
-              </div>
-
-              <div className="edu-card">
-                <div className="edu-icon" aria-hidden="true">📜</div>
-                <div className="edu-details">
-                  <span className="edu-year">High School</span>
-                  <h3 className="edu-degree">SYBA</h3>
-                  <p className="edu-school">Hume High School, Byculla</p>
-                </div>
-              </div>
-
-              <div className="edu-card certification-card">
-                <div className="edu-icon" aria-hidden="true">⭐</div>
-                <div className="edu-details">
-                  <span className="edu-year">Professional Certification</span>
-                  <h3 className="edu-degree">Introduction to Software Engineering</h3>
-                  <p className="edu-school">Verified Credential</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Contact & Call to Action Section */}
-        <section id="contact" className="contact-section">
-          <div className="container">
-            <div className="contact-box">
-              <span className="section-tag">Let's Connect</span>
-              <h2 className="contact-title">Need a fast, scalable frontend or help optimizing your web app?</h2>
-              <p className="contact-subtitle">
-                I take on select freelance projects, frontend architecture consultations, and performance audits each quarter.
-              </p>
-
-              <div className="contact-actions">
-                <a href="mailto:devsandeepsawant@gmail.com" className="btn btn-primary btn-large">
-                  <span>Send Email: devsandeepsawant@gmail.com</span>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                  </svg>
-                </a>
-                <a href="https://www.linkedin.com/in/sandeep-sawant-developer/" target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-large">
-                  <span>View LinkedIn Profile</span>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                    <rect x="2" y="9" width="4" height="12"></rect>
-                    <circle cx="4" cy="4" r="2"></circle>
-                  </svg>
-                </a>
-              </div>
-
-              <div className="contact-meta">
-                <span>📍 Location: Kalyan / Thane, Maharashtra, India</span>
-                <span>⚡ Available for Remote &amp; Hybrid roles</span>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="footer">
-        <div className="container footer-content">
-          <p className="copyright">
-            &copy; {new Date().getFullYear()} Sandeep Sawant. All rights reserved.
-          </p>
-          <p className="performance-pledge">
-            ⚡ Built with React 19 &amp; Vite for sub-second loads and 95+ Core Web Vitals.
-          </p>
-        </div>
-      </footer>
-    </>
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.64 1.64 0 0 0 1.63-1.63 1.64 1.64 0 0 0-1.63-1.63 1.64 1.64 0 0 0-1.64 1.63 1.64 1.64 0 0 0 1.64 1.63m1.4 9.74v-8.37H5.06v8.37h2.8z" />
+    </svg>
   );
 }
 
+function GithubIcon({ className = "w-4 h-4" }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+      <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+    </svg>
+  );
+}
+
+export default function App() {
+  const [activeTab, setActiveTab] = useState('all');
+
+  const stats = [
+    { value: '18+', label: 'Years Experience', sub: 'From web craft to frontend architecture' },
+    { value: '50+', label: 'Shipped Platforms', sub: 'Production travel, commerce & web apps' },
+    { value: '95+', label: 'Lighthouse & CWV', sub: 'Strict Core Web Vitals performance benchmark' },
+    { value: '25%', label: 'Load Speed Uplift', sub: 'Systematic architectural refactoring' },
+  ];
+
+  const projects = [
+    {
+      client: 'Dubai Enterprise Client',
+      role: 'Frontend Architect & React Specialist',
+      period: '2024 – Present',
+      location: 'Dubai, UAE · Remote',
+      title: 'High-Performance React Web Applications',
+      tag: 'Architecture & Optimization',
+      impact: 'Architected high-throughput responsive React interfaces engineered for sub-second page loads and seamless transactional workflows for high-intent Gulf and international customers.',
+      stack: ['React.js', 'Vite', 'Frontend Architecture', 'Responsive UI', 'State Optimization'],
+      highlights: [
+        'Component isolation and modular design for long-term maintainability',
+        'Aggressive bundle slicing and asset optimization',
+        'Bulletproof cross-device responsiveness across complex viewports'
+      ]
+    },
+    {
+      client: 'Sublimis Technologies',
+      role: 'Technical Lead - Frontend',
+      period: '2020 – 2024',
+      location: 'Thane, Mumbai',
+      title: 'High-Volume Travel & E-Commerce Web Platforms',
+      tag: 'Team Leadership & Scale',
+      impact: 'Led an engineering team of 6 frontend developers delivering 3+ enterprise travel and commercial applications with a 95% on-time milestone track record.',
+      stack: ['React.js', 'Leadership', 'Code Refactoring', 'Performance Audit', 'REST APIs'],
+      highlights: [
+        'Boosted page load speed by 25% across customer booking flows',
+        'Reduced runtime exceptions and production bugs by 30%',
+        'Established team-wide automated linting, test patterns, and code review standards'
+      ]
+    },
+    {
+      client: 'Enterprise Standards',
+      role: 'Frontend Engineering Lead',
+      period: 'Sublimis & Practice',
+      location: 'Mumbai Region',
+      title: 'Core Web Vitals & WCAG Accessibility Systems',
+      tag: 'Performance & Compliance',
+      impact: 'Engineered web applications to achieve consistent 95+ Google Lighthouse ratings and full WCAG accessibility compliance, lifting organic search traffic by 15%.',
+      stack: ['Core Web Vitals', 'WCAG 2.1', 'Lighthouse 95+', 'Technical SEO', 'Performance'],
+      highlights: [
+        'Eliminated Largest Contentful Paint (LCP) bottlenecks and layout shifts (CLS)',
+        'Built keyboard-navigable ARIA semantic interaction flows',
+        'Optimized search-engine crawlability and metadata distribution'
+      ]
+    }
+  ];
+
+  const experience = [
+    {
+      period: 'Oct 2024 – Present',
+      title: 'Frontend Developer (React.js)',
+      company: 'Freelance Client',
+      location: 'Dubai, UAE · Remote',
+      summary: 'Building high-performance React.js applications for a prominent Dubai client, focusing on frontend architecture, state management efficiency, and fluid responsive design.'
+    },
+    {
+      period: 'Mar 2020 – Sep 2024',
+      title: 'Technical Lead - Frontend Developer',
+      company: 'Sublimis Technologies',
+      location: 'Thane, Maharashtra, India',
+      summary: 'Directed a team of 6 engineers delivering ReactJS applications for travel and e-commerce. Spearheaded systematic refactoring that increased speed by 25%, reduced runtime errors by 30%, and lifted organic traffic by 15% via SEO and accessibility.'
+    },
+    {
+      period: 'Sep 2014 – Oct 2019',
+      title: 'Team Leader',
+      company: 'Cox & Kings',
+      location: 'Mumbai Metropolitan Region',
+      summary: 'Headed UI development squads delivering customer-facing digital booking platforms using HTML5, modern CSS, and performance-tuned JavaScript frameworks.'
+    },
+    {
+      period: 'Nov 2013 – Jul 2014',
+      title: 'UI Designer & Web Developer',
+      company: 'Asentech India Pvt. Ltd.',
+      location: 'Mumbai Metropolitan Region',
+      summary: 'Crafted digital media and campaign assets for the election campaign of Mr. Narendra Modi, and architected the official digital portal for Himachal Pradesh MP Mr. Anurag Thakur.'
+    },
+    {
+      period: 'Nov 2006 – Nov 2013',
+      title: 'Senior Web Developer',
+      company: 'ImageOnline Pvt. Ltd.',
+      location: 'Mumbai',
+      summary: 'Commenced professional frontend engineering career with a specialized agency, deploying dozens of end-to-end commercial web products over a 7-year tenure.'
+    }
+  ];
+
+  const skillsCategories = [
+    {
+      name: 'Frontend Core & Frameworks',
+      skills: ['React.js', 'JavaScript (ES6+)', 'TypeScript', 'HTML5 Semantic', 'CSS3 / Modern CSS', 'Sass / SCSS', 'Tailwind CSS', 'Vite', 'Next.js principles']
+    },
+    {
+      name: 'Architecture & Performance',
+      skills: ['Core Web Vitals Tuning', 'Lighthouse 95+ Benchmarks', 'Code Refactoring & Slicing', 'Frontend Architecture', 'Technical SEO', 'State Architecture']
+    },
+    {
+      name: 'Standards & Interface Craft',
+      skills: ['Web Accessibility (WCAG 2.1)', 'Figma to Code', 'Cross-Browser Precision', 'Responsive Mobile-First Systems', 'UI / UX Design Craft']
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-[#0c0d0e] text-[#f4f4f5] selection:bg-[#dafa9c] selection:text-[#0c0d0e]">
+      
+      {/* Precision Top Bar */}
+      <header className="sticky top-0 z-50 backdrop-blur-md bg-[#0c0d0e]/85 border-b border-[#23272b]">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <a href="#hero" className="flex items-center gap-3 group">
+            <span className="w-8 h-8 rounded-md bg-[#181a1d] border border-[#2c3238] flex items-center justify-center font-mono font-bold text-xs text-[#dafa9c] group-hover:border-[#dafa9c] transition-colors">
+              SS
+            </span>
+            <div className="flex flex-col">
+              <span className="text-sm font-semibold tracking-tight leading-none text-white">Sandeep Sawant</span>
+              <span className="text-[11px] text-[#8b929a] font-mono mt-0.5">Senior Frontend Architect</span>
+            </div>
+          </a>
+
+          <nav className="hidden md:flex items-center gap-8 text-xs font-medium text-[#8b929a]">
+            <a href="#about" className="hover:text-white transition-colors">About</a>
+            <a href="#projects" className="hover:text-white transition-colors">Work</a>
+            <a href="#experience" className="hover:text-white transition-colors">Experience</a>
+            <a href="#skills" className="hover:text-white transition-colors">Arsenal</a>
+            <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <a 
+              href="mailto:devsandeepsawant@gmail.com" 
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-[#dafa9c] text-[#0c0d0e] text-xs font-semibold hover:bg-[#e6fdb5] transition-all transform active:scale-95"
+            >
+              <span>Get in Touch</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section id="hero" className="relative pt-24 pb-20 border-b border-[#1f2327]">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="max-w-3xl">
+            {/* Status indicator */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#181a1d] border border-[#292f36] text-[11px] font-mono text-[#8b929a] mb-6">
+              <span className="w-2 h-2 rounded-full bg-[#dafa9c] animate-pulse"></span>
+              <span>Available for Senior Frontend Architecture &amp; Advisory Roles</span>
+            </div>
+
+            <h1 className="text-4xl sm:text-6xl font-light tracking-tight text-white leading-[1.08] mb-6">
+              Engineering web apps that <span className="font-normal text-[#dafa9c]">load instantly</span>, scale cleanly, and convert.
+            </h1>
+
+            <p className="text-lg sm:text-xl text-[#8b929a] font-light leading-relaxed mb-10">
+              Senior React.js Developer &amp; Frontend Architect with 18+ years shipping enterprise web platforms. Specialist in Core Web Vitals, speed refactoring, and resilient UI systems. Based in Kalyan / Thane, Mumbai &amp; working remotely worldwide.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-4">
+              <a 
+                href="mailto:devsandeepsawant@gmail.com"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-[#dafa9c] text-[#0c0d0e] font-semibold text-sm hover:bg-[#e6fdb5] transition-colors"
+              >
+                <Mail className="w-4 h-4" />
+                <span>devsandeepsawant@gmail.com</span>
+              </a>
+              <a 
+                href="https://www.linkedin.com/in/sandeep-sawant-developer/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-[#16181b] border border-[#272d34] text-white text-sm hover:border-[#dafa9c]/50 transition-colors"
+              >
+                <LinkedinIcon className="w-4 h-4 text-[#dafa9c]" />
+                <span>LinkedIn Profile</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#8b929a]" />
+              </a>
+              <a 
+                href="https://github.com/devsandeepsawant-max/portfolio" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-[#16181b] border border-[#272d34] text-white text-sm hover:border-[#dafa9c]/50 transition-colors"
+              >
+                <GithubIcon className="w-4 h-4 text-[#dafa9c]" />
+                <span>GitHub</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#8b929a]" />
+              </a>
+            </div>
+          </div>
+
+          {/* Precision Metrics Grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-20 pt-10 border-t border-[#1f2327]">
+            {stats.map((s, idx) => (
+              <div key={idx} className="p-5 rounded-lg bg-[#121416] border border-[#20252a] hover:border-[#2f373f] transition-colors">
+                <div className="text-3xl sm:text-4xl font-light text-[#dafa9c] font-mono tracking-tight mb-1">
+                  {s.value}
+                </div>
+                <div className="text-sm font-medium text-white mb-1">{s.label}</div>
+                <div className="text-xs text-[#717882]">{s.sub}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="py-24 border-b border-[#1f2327]">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div className="lg:col-span-4">
+              <span className="text-xs font-mono text-[#dafa9c] uppercase tracking-wider block mb-2">01 / Foundation</span>
+              <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-white">
+                Quiet precision over noisy defaults.
+              </h2>
+            </div>
+            <div className="lg:col-span-8 space-y-6 text-[#9ba2ab] text-base sm:text-lg leading-relaxed font-light">
+              <p>
+                "Slow frontends lose customers. I build web applications that load fast, scale cleanly and convert better. After 18+ years and 50+ production applications across industries, I focus on performance architecture that directly protects revenue."
+              </p>
+              <p>
+                Having navigated the web's evolution from foundational standards to modern React architectures, I bring rare end-to-end depth: structuring components that remain maintainable under rapid product iterations, preventing layout instability, and securing consistent 95+ Core Web Vitals compliance.
+              </p>
+              <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex items-start gap-3 p-4 rounded-md bg-[#131518] border border-[#22272e]">
+                  <CheckCircle2 className="w-5 h-5 text-[#dafa9c] shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="text-sm font-medium text-white">Sub-Second First Paint</h4>
+                    <p className="text-xs text-[#767e88] mt-1">Ruthless code-splitting, tree-shaking, and critical CSS orchestration.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 p-4 rounded-md bg-[#131518] border border-[#22272e]">
+                  <CheckCircle2 className="w-5 h-5 text-[#dafa9c] shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="text-sm font-medium text-white">Clean Team Scale</h4>
+                    <p className="text-xs text-[#767e88] mt-1">Architectural guidelines that prevent technical debt across 6+ developers.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Projects / Work Section */}
+      <section id="projects" className="py-24 border-b border-[#1f2327]">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
+            <div>
+              <span className="text-xs font-mono text-[#dafa9c] uppercase tracking-wider block mb-2">02 / Proven Delivery</span>
+              <h2 className="text-2xl sm:text-4xl font-light tracking-tight text-white">
+                Featured Engineering Milestones
+              </h2>
+            </div>
+            <p className="text-sm text-[#7e8691] max-w-sm mt-3 md:mt-0 font-mono">
+              Verifiable production achievements from actual client engagements.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8">
+            {projects.map((proj, idx) => (
+              <div 
+                key={idx}
+                className="p-8 rounded-xl bg-[#121417] border border-[#22272d] hover:border-[#353c45] transition-all"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-mono text-[#dafa9c] bg-[#1a1e1b] px-2.5 py-1 rounded border border-[#2f3c2c]">
+                      {proj.tag}
+                    </span>
+                    <span className="text-xs text-[#6e7682] font-mono">{proj.client} · {proj.location}</span>
+                  </div>
+                  <span className="text-xs font-mono text-[#8a929d]">{proj.period}</span>
+                </div>
+
+                <h3 className="text-xl sm:text-2xl font-light text-white mb-3">
+                  {proj.title}
+                </h3>
+                <p className="text-sm sm:text-base text-[#9ba2ab] leading-relaxed mb-6">
+                  {proj.impact}
+                </p>
+
+                <div className="space-y-2 mb-6">
+                  {proj.highlights.map((h, i) => (
+                    <div key={i} className="flex items-center gap-2 text-xs sm:text-sm text-[#878f99]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#dafa9c]"></span>
+                      <span>{h}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap gap-2 pt-4 border-t border-[#1c2126]">
+                  {proj.stack.map((tech, i) => (
+                    <span 
+                      key={i}
+                      className="text-xs font-mono px-2.5 py-1 rounded bg-[#171a1d] text-[#a4acb7] border border-[#282e35]"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Experience Timeline */}
+      <section id="experience" className="py-24 border-b border-[#1f2327]">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="mb-16">
+            <span className="text-xs font-mono text-[#dafa9c] uppercase tracking-wider block mb-2">03 / Career Trajectory</span>
+            <h2 className="text-2xl sm:text-4xl font-light tracking-tight text-white">
+              18+ Years of Continuous Execution
+            </h2>
+          </div>
+
+          <div className="relative border-l border-[#23282f] ml-3 sm:ml-4 space-y-12">
+            {experience.map((exp, idx) => (
+              <div key={idx} className="relative pl-8 sm:pl-10">
+                {/* Node indicator */}
+                <div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#0c0d0e] border-2 border-[#dafa9c]"></div>
+                
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-2">
+                  <h3 className="text-lg font-normal text-white">
+                    {exp.title} <span className="text-[#dafa9c] font-light">@ {exp.company}</span>
+                  </h3>
+                  <span className="text-xs font-mono text-[#6f7782] sm:text-right mt-1 sm:mt-0">{exp.period}</span>
+                </div>
+                <div className="text-xs text-[#7e8692] font-mono mb-3">{exp.location}</div>
+                <p className="text-sm text-[#959da7] leading-relaxed max-w-2xl font-light">
+                  {exp.summary}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Skills Arsenal */}
+      <section id="skills" className="py-24 border-b border-[#1f2327]">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="mb-16">
+            <span className="text-xs font-mono text-[#dafa9c] uppercase tracking-wider block mb-2">04 / Stack</span>
+            <h2 className="text-2xl sm:text-4xl font-light tracking-tight text-white">
+              Technical Arsenal &amp; Disciplines
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {skillsCategories.map((cat, idx) => (
+              <div key={idx} className="p-6 rounded-xl bg-[#121417] border border-[#22272d]">
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-6 font-mono flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#dafa9c]"></span>
+                  {cat.name}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {cat.skills.map((skill, i) => (
+                    <span 
+                      key={i}
+                      className="px-3 py-1.5 rounded-md text-xs font-mono bg-[#181a1d] text-[#b3bac4] border border-[#262c33] hover:border-[#dafa9c]/40 hover:text-white transition-colors"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Education strip */}
+          <div className="mt-12 p-6 rounded-xl bg-[#121417] border border-[#22272d]">
+            <h3 className="text-xs font-mono text-[#dafa9c] uppercase tracking-wider mb-4 flex items-center gap-2">
+              <GraduationCap className="w-4 h-4" />
+              <span>Academic Foundation &amp; Credentials</span>
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-sm">
+              <div>
+                <div className="font-medium text-white">BCA, IT Project Management</div>
+                <div className="text-xs text-[#717983] font-mono mt-0.5">MG University · 2013 – 2015</div>
+              </div>
+              <div>
+                <div className="font-medium text-white">Bachelor's Degree, English Literature</div>
+                <div className="text-xs text-[#717983] font-mono mt-0.5">Mumbai University · 2000 – 2005</div>
+              </div>
+              <div>
+                <div className="font-medium text-white">Introduction to Software Engineering</div>
+                <div className="text-xs text-[#717983] font-mono mt-0.5">Verified Professional Credential</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Direct Contact & Collaboration Section */}
+      <section id="contact" className="py-24">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="p-8 sm:p-14 rounded-2xl bg-[#121416] border border-[#282f37] relative overflow-hidden">
+            <div className="relative z-10 max-w-2xl">
+              <span className="text-xs font-mono text-[#dafa9c] uppercase tracking-wider block mb-3">05 / Engagement</span>
+              <h2 className="text-3xl sm:text-4xl font-light text-white tracking-tight leading-tight mb-4">
+                Have a web application that needs speed, scale, or architectural leadership?
+              </h2>
+              <p className="text-sm sm:text-base text-[#8f96a1] leading-relaxed mb-8 font-light">
+                Available for select freelance contracts, technical lead roles, and performance audits. Fast responses via email or LinkedIn.
+              </p>
+
+              <div className="flex flex-wrap items-center gap-4">
+                <a 
+                  href="mailto:devsandeepsawant@gmail.com"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-[#dafa9c] text-[#0c0d0e] font-semibold text-sm hover:bg-[#e6fdb5] transition-all transform active:scale-95 shadow-sm"
+                >
+                  <Mail className="w-4 h-4" />
+                  <span>devsandeepsawant@gmail.com</span>
+                </a>
+                <a 
+                  href="https://www.linkedin.com/in/sandeep-sawant-developer/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-[#181b1f] border border-[#2e363f] text-white text-sm hover:border-[#dafa9c]/60 transition-colors"
+                >
+                  <LinkedinIcon className="w-4 h-4 text-[#dafa9c]" />
+                  <span>Connect on LinkedIn</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-[#7c8490]" />
+                </a>
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-6 text-xs font-mono text-[#69727e]">
+                <span className="flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#dafa9c]" />
+                  Kalyan / Thane, Mumbai, India
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#dafa9c]" />
+                  Open to Remote &amp; Global Collaborations
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* High-End Minimal Footer */}
+      <footer className="py-8 border-t border-[#1b1f23] text-xs font-mono text-[#626b75]">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            &copy; {new Date().getFullYear()} Sandeep Sawant. All rights reserved.
+          </div>
+          <div className="flex items-center gap-6">
+            <a href="https://github.com/devsandeepsawant-max/portfolio" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              GitHub Repository
+            </a>
+            <a href="https://www.linkedin.com/in/sandeep-sawant-developer/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              LinkedIn
+            </a>
+            <a href="mailto:devsandeepsawant@gmail.com" className="hover:text-white transition-colors">
+              Email
+            </a>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  );
+}

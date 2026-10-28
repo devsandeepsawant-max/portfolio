@@ -57,6 +57,16 @@ export default function App() {
     }));
   }, []);
 
+  // Hanging skills animation metadata
+  const hangingSkills = useMemo(() => [
+    { name: 'React.js', left: '70%', ropeHeight: '75px', dropDelay: '0.2s', swayDelay: '0.1s', badgeColor: '#38bdf8' },
+    { name: 'Performance (CWV)', left: '84%', ropeHeight: '120px', dropDelay: '0.6s', swayDelay: '0.7s', badgeColor: '#0ea5e9' },
+    { name: 'Architecture', left: '58%', ropeHeight: '95px', dropDelay: '1.0s', swayDelay: '1.4s', badgeColor: '#818cf8' },
+    { name: 'JavaScript (ES6+)', left: '77%', ropeHeight: '160px', dropDelay: '1.4s', swayDelay: '2.0s', badgeColor: '#f59e0b' },
+    { name: 'WCAG Accessibility', left: '91%', ropeHeight: '85px', dropDelay: '1.8s', swayDelay: '0.4s', badgeColor: '#10b981' },
+    { name: 'Tailwind CSS', left: '64%', ropeHeight: '190px', dropDelay: '2.2s', swayDelay: '1.1s', badgeColor: '#06b6d4' },
+  ], []);
+
   const stats = [
     { value: '18+', label: 'Years Experience', sub: 'From web craft to frontend architecture' },
     { value: '50+', label: 'Shipped Platforms', sub: 'Production travel, commerce & web apps' },
@@ -281,6 +291,64 @@ export default function App() {
             <div className={`w-3.5 h-3.5 rounded-full absolute top-2 left-10 ${
               isDark ? 'bg-[#38bdf8] shadow-[0_0_12px_#38bdf8]' : 'bg-[#0284c7] shadow-[0_0_12px_rgba(2,132,199,0.7)]'
             }`}></div>
+          </div>
+
+          {/* Falling and Hanging Skills on Ropes */}
+          <div className="hidden lg:block absolute inset-x-0 top-0 h-full pointer-events-none z-10">
+            {hangingSkills.map((skill, idx) => (
+              <div
+                key={idx}
+                className="absolute top-0 flex flex-col items-center pointer-events-auto group"
+                style={{
+                  left: skill.left,
+                  animationDelay: skill.dropDelay,
+                }}
+              >
+                {/* Drop container */}
+                <div 
+                  className="hanging-skill-drop flex flex-col items-center"
+                  style={{ animationDelay: skill.dropDelay }}
+                >
+                  {/* Gentle Swaying container */}
+                  <div 
+                    className="hanging-skill-sway flex flex-col items-center cursor-pointer transition-transform duration-300 hover:scale-110"
+                    style={{ animationDelay: skill.swayDelay }}
+                  >
+                    {/* Anchor Pin at Top Ceiling */}
+                    <div className={`w-2.5 h-2.5 rounded-full border shadow-sm ${
+                      isDark ? 'bg-[#38bdf8] border-[#0ea5e9]' : 'bg-[#0284c7] border-sky-400'
+                    }`}></div>
+
+                    {/* Suspension Rope */}
+                    <div 
+                      className={`w-[1.5px] transition-colors duration-300 ${
+                        isDark 
+                          ? 'bg-gradient-to-b from-[#38bdf8]/80 via-[#38bdf8]/40 to-[#38bdf8]/80' 
+                          : 'bg-gradient-to-b from-[#0284c7]/80 via-[#0284c7]/40 to-[#0284c7]/80'
+                      }`}
+                      style={{ height: skill.ropeHeight }}
+                    ></div>
+
+                    {/* Hanging Skill Card Badge */}
+                    <div 
+                      className={`px-3 py-1.5 rounded-xl border text-xs font-mono font-bold tracking-tight shadow-lg backdrop-blur-md transition-all duration-300 group-hover:shadow-[0_0_16px_rgba(56,189,248,0.5)] ${
+                        isDark 
+                          ? 'bg-[#121624]/90 text-white border-[#2c3752]' 
+                          : 'bg-white/95 text-slate-800 border-sky-200'
+                      }`}
+                    >
+                      <span className="flex items-center gap-1.5">
+                        <span 
+                          className="w-2 h-2 rounded-full animate-ping"
+                          style={{ backgroundColor: skill.badgeColor }}
+                        ></span>
+                        <span>{skill.name}</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 

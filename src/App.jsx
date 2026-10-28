@@ -232,37 +232,57 @@ export default function App() {
       {/* Hero Section with Interactive Space / Nebula Backdrop */}
       <section id="hero" className={`relative pt-24 pb-28 overflow-hidden border-b transition-colors duration-300 ${isDark ? 'border-[#1e2436]' : 'border-slate-200'}`}>
         
-        {/* Space Cosmos Elements */}
-        {isDark && (
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            {/* Celestial Glowing Nebulas */}
-            <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-[#0284c7]/25 blur-[120px] animate-pulse-glow"></div>
-            <div className="absolute top-1/4 -right-20 w-[450px] h-[450px] rounded-full bg-[#6366f1]/20 blur-[140px] animate-pulse-glow" style={{ animationDelay: '2s' }}></div>
-            <div className="absolute -bottom-20 left-1/3 w-80 h-80 rounded-full bg-[#38bdf8]/15 blur-[100px] animate-pulse-glow" style={{ animationDelay: '3.5s' }}></div>
+        {/* Space Cosmos Elements (Visible in both Dark and Light mode) */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {/* Celestial Glowing Nebulas */}
+          <div 
+            className={`absolute -top-32 -left-32 w-96 h-96 rounded-full blur-[120px] animate-pulse-glow ${
+              isDark ? 'bg-[#0284c7]/25' : 'bg-[#0284c7]/20'
+            }`}
+          ></div>
+          <div 
+            className={`absolute top-1/4 -right-20 w-[450px] h-[450px] rounded-full blur-[140px] animate-pulse-glow ${
+              isDark ? 'bg-[#6366f1]/20' : 'bg-[#818cf8]/25'
+            }`} 
+            style={{ animationDelay: '2s' }}
+          ></div>
+          <div 
+            className={`absolute -bottom-20 left-1/3 w-80 h-80 rounded-full blur-[100px] animate-pulse-glow ${
+              isDark ? 'bg-[#38bdf8]/15' : 'bg-[#0ea5e9]/20'
+            }`} 
+            style={{ animationDelay: '3.5s' }}
+          ></div>
 
-            {/* Deep Space Stars */}
-            {stars.map((s) => (
-              <div
-                key={s.id}
-                className="absolute rounded-full bg-white animate-twinkle"
-                style={{
-                  left: s.left,
-                  top: s.top,
-                  width: s.size,
-                  height: s.size,
-                  animationDelay: s.delay,
-                  opacity: s.opacity,
-                  boxShadow: `0 0 6px rgba(255, 255, 255, ${s.opacity})`
-                }}
-              />
-            ))}
+          {/* Space Star Particles */}
+          {stars.map((s) => (
+            <div
+              key={s.id}
+              className={`absolute rounded-full animate-twinkle ${
+                isDark ? 'bg-white' : 'bg-[#0284c7]'
+              }`}
+              style={{
+                left: s.left,
+                top: s.top,
+                width: s.size,
+                height: s.size,
+                animationDelay: s.delay,
+                opacity: isDark ? s.opacity : Math.min(s.opacity + 0.3, 0.9),
+                boxShadow: isDark 
+                  ? `0 0 6px rgba(255, 255, 255, ${s.opacity})` 
+                  : `0 0 6px rgba(2, 132, 199, 0.6)`
+              }}
+            />
+          ))}
 
-            {/* Floating Orbit Graphic */}
-            <div className="absolute top-20 right-10 lg:right-28 w-64 h-64 border border-[#38bdf8]/15 rounded-full animate-float pointer-events-none">
-              <div className="w-3 h-3 rounded-full bg-[#38bdf8] absolute top-2 left-10 shadow-[0_0_12px_#38bdf8]"></div>
-            </div>
+          {/* Floating Orbit Graphic */}
+          <div className={`absolute top-20 right-10 lg:right-28 w-64 h-64 border rounded-full animate-float pointer-events-none ${
+            isDark ? 'border-[#38bdf8]/20' : 'border-[#0284c7]/30'
+          }`}>
+            <div className={`w-3.5 h-3.5 rounded-full absolute top-2 left-10 ${
+              isDark ? 'bg-[#38bdf8] shadow-[0_0_12px_#38bdf8]' : 'bg-[#0284c7] shadow-[0_0_12px_rgba(2,132,199,0.7)]'
+            }`}></div>
           </div>
-        )}
+        </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="max-w-4xl">

@@ -47,25 +47,15 @@ export default function App() {
 
   // Generate deterministic stars for space backdrop
   const stars = useMemo(() => {
-    return Array.from({ length: 45 }).map((_, i) => ({
+    return Array.from({ length: 48 }).map((_, i) => ({
       id: i,
       left: `${(i * 17) % 98}%`,
       top: `${(i * 23) % 92}%`,
-      size: `${(i % 3) + 1.5}px`,
+      size: (i % 3 === 0) ? 14 : (i % 2 === 0) ? 10 : 8,
       delay: `${(i % 5) * 0.7}s`,
       opacity: ((i % 5) + 3) / 10
     }));
   }, []);
-
-  // Hanging skills animation metadata
-  const hangingSkills = useMemo(() => [
-    { name: 'React.js', left: '70%', ropeHeight: '75px', dropDelay: '0.2s', swayDelay: '0.1s', badgeColor: '#38bdf8' },
-    { name: 'Performance (CWV)', left: '84%', ropeHeight: '120px', dropDelay: '0.6s', swayDelay: '0.7s', badgeColor: '#0ea5e9' },
-    { name: 'Architecture', left: '58%', ropeHeight: '95px', dropDelay: '1.0s', swayDelay: '1.4s', badgeColor: '#818cf8' },
-    { name: 'JavaScript (ES6+)', left: '77%', ropeHeight: '160px', dropDelay: '1.4s', swayDelay: '2.0s', badgeColor: '#f59e0b' },
-    { name: 'WCAG Accessibility', left: '91%', ropeHeight: '85px', dropDelay: '1.8s', swayDelay: '0.4s', badgeColor: '#10b981' },
-    { name: 'Tailwind CSS', left: '64%', ropeHeight: '190px', dropDelay: '2.2s', swayDelay: '1.1s', badgeColor: '#06b6d4' },
-  ], []);
 
   const stats = [
     { value: '18+', label: 'Years Experience', sub: 'From web craft to frontend architecture' },
@@ -263,25 +253,59 @@ export default function App() {
             style={{ animationDelay: '3.5s' }}
           ></div>
 
-          {/* Space Star Particles */}
+          {/* Spaceship Crossing the Hero Section */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden z-20">
+            <div className="animate-spaceship absolute flex items-center">
+              {/* Spaceship Rocket Body */}
+              <div className="relative">
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" className="transform -rotate-45 drop-shadow-[0_0_12px_rgba(56,189,248,0.8)]">
+                  <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" fill={isDark ? '#38bdf8' : '#0284c7'} />
+                  <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" fill={isDark ? '#e0f2fe' : '#ffffff'} stroke={isDark ? '#38bdf8' : '#0284c7'} strokeWidth="1.5" />
+                  <circle cx="15.5" cy="8.5" r="1.75" fill={isDark ? '#0284c7' : '#38bdf8'} />
+                  <path d="M9 18c-4.51 2-5-2-7-2" stroke={isDark ? '#f43f5e' : '#e11d48'} strokeWidth="1.5" strokeLinecap="round" />
+                  <path d="M6 15c-2 4.51 2 5 2 7" stroke={isDark ? '#f43f5e' : '#e11d48'} strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+                {/* Engine Jet Flame with dynamic glow */}
+                <div className="absolute -bottom-1 -left-4 w-7 h-3 rounded-full bg-gradient-to-r from-transparent via-amber-400 to-rose-500 blur-[1px] animate-pulse"></div>
+              </div>
+
+              {/* Warp Speed Jet Trail / Exhaust */}
+              <div 
+                className={`h-[2px] w-48 -ml-3 rounded-full ${
+                  isDark 
+                    ? 'bg-gradient-to-l from-transparent via-[#38bdf8]/60 to-transparent shadow-[0_0_8px_#38bdf8]' 
+                    : 'bg-gradient-to-l from-transparent via-[#0284c7]/50 to-transparent shadow-[0_0_8px_#0284c7]'
+                }`}
+              ></div>
+            </div>
+          </div>
+
+          {/* Realistic 4-Point Star Shaped Constellations */}
           {stars.map((s) => (
             <div
               key={s.id}
-              className={`absolute rounded-full animate-twinkle ${
-                isDark ? 'bg-white' : 'bg-[#0284c7]'
-              }`}
+              className="absolute animate-twinkle pointer-events-none"
               style={{
                 left: s.left,
                 top: s.top,
-                width: s.size,
-                height: s.size,
                 animationDelay: s.delay,
-                opacity: isDark ? s.opacity : Math.min(s.opacity + 0.3, 0.9),
-                boxShadow: isDark 
-                  ? `0 0 6px rgba(255, 255, 255, ${s.opacity})` 
-                  : `0 0 6px rgba(2, 132, 199, 0.6)`
+                opacity: isDark ? s.opacity : Math.min(s.opacity + 0.35, 0.95),
               }}
-            />
+            >
+              <svg 
+                width={s.size} 
+                height={s.size} 
+                viewBox="0 0 24 24" 
+                fill={isDark ? '#ffffff' : '#0284c7'}
+                style={{
+                  filter: isDark 
+                    ? `drop-shadow(0 0 5px rgba(255, 255, 255, ${s.opacity}))` 
+                    : `drop-shadow(0 0 5px rgba(2, 132, 199, 0.7))`
+                }}
+              >
+                <path d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z" />
+              </svg>
+            </div>
           ))}
 
           {/* Floating Orbit Graphic */}
@@ -291,64 +315,6 @@ export default function App() {
             <div className={`w-3.5 h-3.5 rounded-full absolute top-2 left-10 ${
               isDark ? 'bg-[#38bdf8] shadow-[0_0_12px_#38bdf8]' : 'bg-[#0284c7] shadow-[0_0_12px_rgba(2,132,199,0.7)]'
             }`}></div>
-          </div>
-
-          {/* Falling and Hanging Skills on Ropes */}
-          <div className="hidden lg:block absolute inset-x-0 top-0 h-full pointer-events-none z-10">
-            {hangingSkills.map((skill, idx) => (
-              <div
-                key={idx}
-                className="absolute top-0 flex flex-col items-center pointer-events-auto group"
-                style={{
-                  left: skill.left,
-                  animationDelay: skill.dropDelay,
-                }}
-              >
-                {/* Drop container */}
-                <div 
-                  className="hanging-skill-drop flex flex-col items-center"
-                  style={{ animationDelay: skill.dropDelay }}
-                >
-                  {/* Gentle Swaying container */}
-                  <div 
-                    className="hanging-skill-sway flex flex-col items-center cursor-pointer transition-transform duration-300 hover:scale-110"
-                    style={{ animationDelay: skill.swayDelay }}
-                  >
-                    {/* Anchor Pin at Top Ceiling */}
-                    <div className={`w-2.5 h-2.5 rounded-full border shadow-sm ${
-                      isDark ? 'bg-[#38bdf8] border-[#0ea5e9]' : 'bg-[#0284c7] border-sky-400'
-                    }`}></div>
-
-                    {/* Suspension Rope */}
-                    <div 
-                      className={`w-[1.5px] transition-colors duration-300 ${
-                        isDark 
-                          ? 'bg-gradient-to-b from-[#38bdf8]/80 via-[#38bdf8]/40 to-[#38bdf8]/80' 
-                          : 'bg-gradient-to-b from-[#0284c7]/80 via-[#0284c7]/40 to-[#0284c7]/80'
-                      }`}
-                      style={{ height: skill.ropeHeight }}
-                    ></div>
-
-                    {/* Hanging Skill Card Badge */}
-                    <div 
-                      className={`px-3 py-1.5 rounded-xl border text-xs font-mono font-bold tracking-tight shadow-lg backdrop-blur-md transition-all duration-300 group-hover:shadow-[0_0_16px_rgba(56,189,248,0.5)] ${
-                        isDark 
-                          ? 'bg-[#121624]/90 text-white border-[#2c3752]' 
-                          : 'bg-white/95 text-slate-800 border-sky-200'
-                      }`}
-                    >
-                      <span className="flex items-center gap-1.5">
-                        <span 
-                          className="w-2 h-2 rounded-full animate-ping"
-                          style={{ backgroundColor: skill.badgeColor }}
-                        ></span>
-                        <span>{skill.name}</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
 

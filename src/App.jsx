@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { 
   ArrowUpRight, 
   Mail, 
   MapPin, 
-  Briefcase, 
   GraduationCap, 
   CheckCircle2, 
-  Layers, 
-  Zap, 
-  Sliders, 
-  ArrowRight,
-  Code2,
-  Terminal,
-  ExternalLink
+  Sparkles,
+  ExternalLink,
+  Sun,
+  Moon,
+  Compass,
+  Zap,
+  ShieldCheck,
+  ChevronRight
 } from 'lucide-react';
 
 function LinkedinIcon({ className = "w-4 h-4" }) {
@@ -32,7 +32,30 @@ function GithubIcon({ className = "w-4 h-4" }) {
 }
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('all');
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('sandeep-portfolio-theme') || 'dark';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('sandeep-portfolio-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
+
+  // Generate deterministic stars for space backdrop
+  const stars = useMemo(() => {
+    return Array.from({ length: 45 }).map((_, i) => ({
+      id: i,
+      left: `${(i * 17) % 98}%`,
+      top: `${(i * 23) % 92}%`,
+      size: `${(i % 3) + 1.5}px`,
+      delay: `${(i % 5) * 0.7}s`,
+      opacity: ((i % 5) + 3) / 10
+    }));
+  }, []);
 
   const stats = [
     { value: '18+', label: 'Years Experience', sub: 'From web craft to frontend architecture' },
@@ -130,7 +153,7 @@ export default function App() {
   const skillsCategories = [
     {
       name: 'Frontend Core & Frameworks',
-      skills: ['React.js', 'JavaScript (ES6+)', 'TypeScript', 'HTML5 Semantic', 'CSS3 / Modern CSS', 'Sass / SCSS', 'Tailwind CSS', 'Vite', 'Next.js principles']
+      skills: ['React.js', 'JavaScript (ES6+)', 'TypeScript', 'HTML5 Semantic', 'CSS3 / Modern CSS', 'Sass / SCSS', 'Tailwind CSS', 'Vite', 'Next.js architecture']
     },
     {
       name: 'Architecture & Performance',
@@ -142,100 +165,190 @@ export default function App() {
     }
   ];
 
+  const isDark = theme === 'dark';
+
   return (
-    <div className="min-h-screen bg-[#0c0d0e] text-[#f4f4f5] selection:bg-[#dafa9c] selection:text-[#0c0d0e]">
+    <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'bg-[#090a0f] text-[#f8fafc]' : 'bg-[#f8fafc] text-[#0f172a]'}`}>
       
-      {/* Precision Top Bar */}
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-[#0c0d0e]/85 border-b border-[#23272b]">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <a href="#hero" className="flex items-center gap-3 group">
-            <span className="w-8 h-8 rounded-md bg-[#181a1d] border border-[#2c3238] flex items-center justify-center font-mono font-bold text-xs text-[#dafa9c] group-hover:border-[#dafa9c] transition-colors">
+      {/* Top Navigation */}
+      <header className={`sticky top-0 z-50 backdrop-blur-xl border-b transition-colors duration-300 ${isDark ? 'bg-[#090a0f]/85 border-[#23293d]' : 'bg-[#ffffff]/85 border-[#e2e8f0]'}`}>
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <a href="#hero" className="flex items-center gap-4 group">
+            <div className={`w-11 h-11 rounded-xl flex items-center justify-center font-mono font-bold text-base transition-all duration-300 shadow-sm ${isDark ? 'bg-[#151928] border border-[#2a344f] text-[#38bdf8] group-hover:border-[#38bdf8] group-hover:shadow-[0_0_15px_rgba(56,189,248,0.4)]' : 'bg-[#0284c7]/10 border border-[#0284c7]/30 text-[#0284c7] group-hover:bg-[#0284c7]/20'}`}>
               SS
-            </span>
+            </div>
             <div className="flex flex-col">
-              <span className="text-sm font-semibold tracking-tight leading-none text-white">Sandeep Sawant</span>
-              <span className="text-[11px] text-[#8b929a] font-mono mt-0.5">Senior Frontend Architect</span>
+              <span className={`text-lg font-bold tracking-tight leading-none ${isDark ? 'text-white' : 'text-slate-900'}`}>Sandeep Sawant</span>
+              <span className={`text-xs font-mono mt-1 ${isDark ? 'text-[#94a3b8]' : 'text-slate-500'}`}>Senior React &amp; Frontend Architect</span>
             </div>
           </a>
 
-          <nav className="hidden md:flex items-center gap-8 text-xs font-medium text-[#8b929a]">
-            <a href="#about" className="hover:text-white transition-colors">About</a>
-            <a href="#projects" className="hover:text-white transition-colors">Work</a>
-            <a href="#experience" className="hover:text-white transition-colors">Experience</a>
-            <a href="#skills" className="hover:text-white transition-colors">Arsenal</a>
-            <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+          {/* Links */}
+          <nav className={`hidden md:flex items-center gap-10 text-sm font-semibold tracking-wide ${isDark ? 'text-[#94a3b8]' : 'text-slate-600'}`}>
+            <a href="#about" className="hover:text-[#38bdf8] transition-colors">About</a>
+            <a href="#projects" className="hover:text-[#38bdf8] transition-colors">Work</a>
+            <a href="#experience" className="hover:text-[#38bdf8] transition-colors">Experience</a>
+            <a href="#skills" className="hover:text-[#38bdf8] transition-colors">Skills</a>
+            <a href="#contact" className="hover:text-[#38bdf8] transition-colors">Contact</a>
           </nav>
 
-          <div className="flex items-center gap-3">
+          {/* Actions & Theme Switcher */}
+          <div className="flex items-center gap-4">
+            {/* Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle dark and light theme"
+              className={`p-2.5 rounded-xl border flex items-center gap-2 text-xs font-semibold font-mono transition-all duration-300 hover:scale-105 active:scale-95 ${
+                isDark 
+                  ? 'bg-[#151928] border-[#2a344f] text-[#38bdf8] hover:bg-[#1f263d] shadow-[0_0_10px_rgba(56,189,248,0.15)]' 
+                  : 'bg-white border-slate-300 text-amber-500 hover:bg-slate-100 shadow-sm'
+              }`}
+            >
+              {isDark ? (
+                <>
+                  <Sun className="w-4 h-4 text-amber-400 animate-spin-slow" />
+                  <span className="hidden sm:inline text-slate-300">Light Mode</span>
+                </>
+              ) : (
+                <>
+                  <Moon className="w-4 h-4 text-indigo-600" />
+                  <span className="hidden sm:inline text-slate-700">Dark Mode</span>
+                </>
+              )}
+            </button>
+
+            {/* Header CTA */}
             <a 
               href="mailto:devsandeepsawant@gmail.com" 
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-[#dafa9c] text-[#0c0d0e] text-xs font-semibold hover:bg-[#e6fdb5] transition-all transform active:scale-95"
+              className="cta-shimmer relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#0284c7] to-[#38bdf8] text-white text-xs font-bold uppercase tracking-wider shadow-md hover:shadow-[0_0_20px_rgba(56,189,248,0.6)] transition-all"
             >
               <span>Get in Touch</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <ArrowUpRight className="w-4 h-4" />
             </a>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section id="hero" className="relative pt-24 pb-20 border-b border-[#1f2327]">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="max-w-3xl">
-            {/* Status indicator */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#181a1d] border border-[#292f36] text-[11px] font-mono text-[#8b929a] mb-6">
-              <span className="w-2 h-2 rounded-full bg-[#dafa9c] animate-pulse"></span>
-              <span>Available for Senior Frontend Architecture &amp; Advisory Roles</span>
+      {/* Hero Section with Interactive Space / Nebula Backdrop */}
+      <section id="hero" className={`relative pt-24 pb-28 overflow-hidden border-b transition-colors duration-300 ${isDark ? 'border-[#1e2436]' : 'border-slate-200'}`}>
+        
+        {/* Space Cosmos Elements */}
+        {isDark && (
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            {/* Celestial Glowing Nebulas */}
+            <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-[#0284c7]/25 blur-[120px] animate-pulse-glow"></div>
+            <div className="absolute top-1/4 -right-20 w-[450px] h-[450px] rounded-full bg-[#6366f1]/20 blur-[140px] animate-pulse-glow" style={{ animationDelay: '2s' }}></div>
+            <div className="absolute -bottom-20 left-1/3 w-80 h-80 rounded-full bg-[#38bdf8]/15 blur-[100px] animate-pulse-glow" style={{ animationDelay: '3.5s' }}></div>
+
+            {/* Deep Space Stars */}
+            {stars.map((s) => (
+              <div
+                key={s.id}
+                className="absolute rounded-full bg-white animate-twinkle"
+                style={{
+                  left: s.left,
+                  top: s.top,
+                  width: s.size,
+                  height: s.size,
+                  animationDelay: s.delay,
+                  opacity: s.opacity,
+                  boxShadow: `0 0 6px rgba(255, 255, 255, ${s.opacity})`
+                }}
+              />
+            ))}
+
+            {/* Floating Orbit Graphic */}
+            <div className="absolute top-20 right-10 lg:right-28 w-64 h-64 border border-[#38bdf8]/15 rounded-full animate-float pointer-events-none">
+              <div className="w-3 h-3 rounded-full bg-[#38bdf8] absolute top-2 left-10 shadow-[0_0_12px_#38bdf8]"></div>
+            </div>
+          </div>
+        )}
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          <div className="max-w-4xl">
+            
+            {/* Availability Pill */}
+            <div className={`inline-flex items-center gap-3 px-4 py-1.5 rounded-full text-xs font-mono font-medium mb-8 transition-colors ${
+              isDark 
+                ? 'bg-[#151928]/90 border border-[#2d3856] text-[#38bdf8] shadow-[0_0_15px_rgba(56,189,248,0.2)]' 
+                : 'bg-sky-50 border border-sky-200 text-sky-800'
+            }`}>
+              <span className="w-2.5 h-2.5 rounded-full bg-[#38bdf8] animate-ping"></span>
+              <span>Available for Select Senior Frontend Architecture &amp; Advisory Projects</span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl font-light tracking-tight text-white leading-[1.08] mb-6">
-              Engineering web apps that <span className="font-normal text-[#dafa9c]">load instantly</span>, scale cleanly, and convert.
+            {/* Bold Headline */}
+            <h1 className={`text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight leading-[1.05] mb-8 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+              High-Velocity <br className="hidden sm:inline" />
+              <span className="bg-gradient-to-r from-[#0284c7] via-[#38bdf8] to-[#818cf8] bg-clip-text text-transparent">
+                React Architectures
+              </span>
             </h1>
 
-            <p className="text-lg sm:text-xl text-[#8b929a] font-light leading-relaxed mb-10">
-              Senior React.js Developer &amp; Frontend Architect with 18+ years shipping enterprise web platforms. Specialist in Core Web Vitals, speed refactoring, and resilient UI systems. Based in Kalyan / Thane, Mumbai &amp; working remotely worldwide.
+            {/* Subtitle */}
+            <p className={`text-xl sm:text-2xl font-normal leading-relaxed mb-12 max-w-3xl ${isDark ? 'text-[#94a3b8]' : 'text-slate-600'}`}>
+              I help businesses engineer fast, scalable web applications that load under 1s, convert users, and achieve <strong className={isDark ? 'text-white' : 'text-slate-900'}>95+ Core Web Vitals</strong>. 18+ years of craft based in Mumbai, collaborating worldwide.
             </p>
 
-            <div className="flex flex-wrap items-center gap-4">
+            {/* Animated CTAs */}
+            <div className="flex flex-wrap items-center gap-5">
               <a 
                 href="mailto:devsandeepsawant@gmail.com"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-[#dafa9c] text-[#0c0d0e] font-semibold text-sm hover:bg-[#e6fdb5] transition-colors"
+                className="cta-shimmer group relative inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-[#0284c7] to-[#38bdf8] text-white font-bold text-base shadow-lg shadow-sky-500/25 transition-all"
               >
-                <Mail className="w-4 h-4" />
+                <Mail className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 <span>devsandeepsawant@gmail.com</span>
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
+
               <a 
                 href="https://www.linkedin.com/in/sandeep-sawant-developer/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-[#16181b] border border-[#272d34] text-white text-sm hover:border-[#dafa9c]/50 transition-colors"
+                className={`cta-shimmer group inline-flex items-center gap-3 px-7 py-4 rounded-xl font-bold text-base border transition-all ${
+                  isDark 
+                    ? 'bg-[#121622] border-[#29344d] text-white hover:border-[#38bdf8] hover:bg-[#1a2033]' 
+                    : 'bg-white border-slate-300 text-slate-800 hover:border-sky-500 hover:bg-slate-50 shadow-sm'
+                }`}
               >
-                <LinkedinIcon className="w-4 h-4 text-[#dafa9c]" />
+                <LinkedinIcon className="w-5 h-5 text-[#38bdf8] group-hover:scale-110 transition-transform" />
                 <span>LinkedIn Profile</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-[#8b929a]" />
+                <ArrowUpRight className="w-4 h-4 text-[#94a3b8] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
+
               <a 
                 href="https://github.com/devsandeepsawant-max/portfolio" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-[#16181b] border border-[#272d34] text-white text-sm hover:border-[#dafa9c]/50 transition-colors"
+                className={`cta-shimmer group inline-flex items-center gap-3 px-7 py-4 rounded-xl font-bold text-base border transition-all ${
+                  isDark 
+                    ? 'bg-[#121622] border-[#29344d] text-white hover:border-[#38bdf8] hover:bg-[#1a2033]' 
+                    : 'bg-white border-slate-300 text-slate-800 hover:border-sky-500 hover:bg-slate-50 shadow-sm'
+                }`}
               >
-                <GithubIcon className="w-4 h-4 text-[#dafa9c]" />
+                <GithubIcon className="w-5 h-5 text-[#38bdf8] group-hover:scale-110 transition-transform" />
                 <span>GitHub</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-[#8b929a]" />
+                <ArrowUpRight className="w-4 h-4 text-[#94a3b8] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
             </div>
           </div>
 
-          {/* Precision Metrics Grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-20 pt-10 border-t border-[#1f2327]">
+          {/* Large Stat Cards */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-20 pt-12 border-t border-[#1e2436]">
             {stats.map((s, idx) => (
-              <div key={idx} className="p-5 rounded-lg bg-[#121416] border border-[#20252a] hover:border-[#2f373f] transition-colors">
-                <div className="text-3xl sm:text-4xl font-light text-[#dafa9c] font-mono tracking-tight mb-1">
+              <div 
+                key={idx} 
+                className={`p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1 ${
+                  isDark 
+                    ? 'bg-[#10141f]/80 border-[#222b40] hover:border-[#38bdf8]/50 shadow-[0_4px_20px_rgba(0,0,0,0.3)]' 
+                    : 'bg-white border-slate-200 hover:border-sky-400 shadow-sm'
+                }`}
+              >
+                <div className="text-4xl sm:text-5xl font-black font-mono tracking-tight bg-gradient-to-r from-[#0284c7] to-[#38bdf8] bg-clip-text text-transparent mb-2">
                   {s.value}
                 </div>
-                <div className="text-sm font-medium text-white mb-1">{s.label}</div>
-                <div className="text-xs text-[#717882]">{s.sub}</div>
+                <div className={`text-base font-bold mb-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>{s.label}</div>
+                <div className={`text-xs ${isDark ? 'text-[#8290a3]' : 'text-slate-500'}`}>{s.sub}</div>
               </div>
             ))}
           </div>
@@ -243,36 +356,40 @@ export default function App() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-24 border-b border-[#1f2327]">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <section id="about" className={`py-28 border-b transition-colors duration-300 ${isDark ? 'border-[#1e2436]' : 'border-slate-200'}`}>
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             <div className="lg:col-span-4">
-              <span className="text-xs font-mono text-[#dafa9c] uppercase tracking-wider block mb-2">01 / Foundation</span>
-              <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-white">
-                Quiet precision over noisy defaults.
+              <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#38bdf8] block mb-3">01 / Philosophy</span>
+              <h2 className={`text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                Performance is not an afterthought. It is the product.
               </h2>
             </div>
-            <div className="lg:col-span-8 space-y-6 text-[#9ba2ab] text-base sm:text-lg leading-relaxed font-light">
-              <p>
-                "Slow frontends lose customers. I build web applications that load fast, scale cleanly and convert better. After 18+ years and 50+ production applications across industries, I focus on performance architecture that directly protects revenue."
+            
+            <div className={`lg:col-span-8 space-y-8 text-lg sm:text-xl font-normal leading-relaxed ${isDark ? 'text-[#94a3b8]' : 'text-slate-600'}`}>
+              <p className={`p-6 rounded-2xl border ${isDark ? 'bg-[#121624] border-[#252f48] text-slate-200' : 'bg-sky-50/50 border-sky-100 text-slate-800'}`}>
+                "Slow frontends lose customers. I build web applications that load fast, scale cleanly and convert better. After 18+ years and 50+ production applications across industries, I take on a few select projects each quarter. If your app feels sluggish or hard to scale, message me."
               </p>
+              
               <p>
-                Having navigated the web's evolution from foundational standards to modern React architectures, I bring rare end-to-end depth: structuring components that remain maintainable under rapid product iterations, preventing layout instability, and securing consistent 95+ Core Web Vitals compliance.
+                From classic web foundations to enterprise React ecosystems, I combine architectural discipline with practical speed engineering. I specialize in isolating bottlenecks, eliminating layout shifts, and leading teams to deliver resilient digital platforms.
               </p>
-              <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex items-start gap-3 p-4 rounded-md bg-[#131518] border border-[#22272e]">
-                  <CheckCircle2 className="w-5 h-5 text-[#dafa9c] shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="text-sm font-medium text-white">Sub-Second First Paint</h4>
-                    <p className="text-xs text-[#767e88] mt-1">Ruthless code-splitting, tree-shaking, and critical CSS orchestration.</p>
-                  </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+                <div className={`p-6 rounded-2xl border transition-all ${isDark ? 'bg-[#111520] border-[#222a3d]' : 'bg-white border-slate-200 shadow-sm'}`}>
+                  <Zap className="w-8 h-8 text-[#38bdf8] mb-3" />
+                  <h4 className={`text-lg font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>Sub-Second First Paint</h4>
+                  <p className={`text-sm ${isDark ? 'text-[#8290a3]' : 'text-slate-500'}`}>
+                    Tree-shaking, code slicing, dynamic imports, and memory leak elimination.
+                  </p>
                 </div>
-                <div className="flex items-start gap-3 p-4 rounded-md bg-[#131518] border border-[#22272e]">
-                  <CheckCircle2 className="w-5 h-5 text-[#dafa9c] shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="text-sm font-medium text-white">Clean Team Scale</h4>
-                    <p className="text-xs text-[#767e88] mt-1">Architectural guidelines that prevent technical debt across 6+ developers.</p>
-                  </div>
+
+                <div className={`p-6 rounded-2xl border transition-all ${isDark ? 'bg-[#111520] border-[#222a3d]' : 'bg-white border-slate-200 shadow-sm'}`}>
+                  <ShieldCheck className="w-8 h-8 text-[#38bdf8] mb-3" />
+                  <h4 className={`text-lg font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>Scalable Team Governance</h4>
+                  <p className={`text-sm ${isDark ? 'text-[#8290a3]' : 'text-slate-500'}`}>
+                    Architecture blueprints that keep 6+ developers shipping on-time without regressions.
+                  </p>
                 </div>
               </div>
             </div>
@@ -281,57 +398,65 @@ export default function App() {
       </section>
 
       {/* Featured Projects / Work Section */}
-      <section id="projects" className="py-24 border-b border-[#1f2327]">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
+      <section id="projects" className={`py-28 border-b transition-colors duration-300 ${isDark ? 'border-[#1e2436]' : 'border-slate-200'}`}>
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-20">
             <div>
-              <span className="text-xs font-mono text-[#dafa9c] uppercase tracking-wider block mb-2">02 / Proven Delivery</span>
-              <h2 className="text-2xl sm:text-4xl font-light tracking-tight text-white">
-                Featured Engineering Milestones
+              <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#38bdf8] block mb-3">02 / Portfolio</span>
+              <h2 className={`text-3xl sm:text-5xl font-extrabold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                Featured Engineering Work
               </h2>
             </div>
-            <p className="text-sm text-[#7e8691] max-w-sm mt-3 md:mt-0 font-mono">
-              Verifiable production achievements from actual client engagements.
+            <p className={`text-base font-mono mt-4 md:mt-0 max-w-sm ${isDark ? 'text-[#8290a3]' : 'text-slate-500'}`}>
+              Real accomplishments from high-stake client platforms.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-8">
+          <div className="grid grid-cols-1 gap-10">
             {projects.map((proj, idx) => (
               <div 
                 key={idx}
-                className="p-8 rounded-xl bg-[#121417] border border-[#22272d] hover:border-[#353c45] transition-all"
+                className={`p-8 sm:p-12 rounded-3xl border transition-all duration-300 hover:shadow-2xl ${
+                  isDark 
+                    ? 'bg-[#10141f] border-[#222b40] hover:border-[#38bdf8]/60 shadow-[0_10px_30px_rgba(0,0,0,0.4)]' 
+                    : 'bg-white border-slate-200 hover:border-sky-500 shadow-md'
+                }`}
               >
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
                   <div className="flex items-center gap-3">
-                    <span className="text-xs font-mono text-[#dafa9c] bg-[#1a1e1b] px-2.5 py-1 rounded border border-[#2f3c2c]">
+                    <span className="text-xs font-mono font-bold text-[#0284c7] bg-sky-500/10 px-3 py-1.5 rounded-lg border border-sky-500/20">
                       {proj.tag}
                     </span>
-                    <span className="text-xs text-[#6e7682] font-mono">{proj.client} · {proj.location}</span>
+                    <span className={`text-sm font-mono ${isDark ? 'text-[#7d8b9e]' : 'text-slate-500'}`}>{proj.client} · {proj.location}</span>
                   </div>
-                  <span className="text-xs font-mono text-[#8a929d]">{proj.period}</span>
+                  <span className={`text-sm font-mono font-bold ${isDark ? 'text-[#38bdf8]' : 'text-sky-700'}`}>{proj.period}</span>
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-light text-white mb-3">
+                <h3 className={`text-2xl sm:text-4xl font-bold tracking-tight mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                   {proj.title}
                 </h3>
-                <p className="text-sm sm:text-base text-[#9ba2ab] leading-relaxed mb-6">
+                <p className={`text-base sm:text-lg leading-relaxed mb-8 ${isDark ? 'text-[#94a3b8]' : 'text-slate-600'}`}>
                   {proj.impact}
                 </p>
 
-                <div className="space-y-2 mb-6">
+                <div className="space-y-3 mb-8">
                   {proj.highlights.map((h, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs sm:text-sm text-[#878f99]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#dafa9c]"></span>
-                      <span>{h}</span>
+                    <div key={i} className="flex items-center gap-3 text-sm sm:text-base">
+                      <CheckCircle2 className="w-5 h-5 text-[#38bdf8] shrink-0" />
+                      <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>{h}</span>
                     </div>
                   ))}
                 </div>
 
-                <div className="flex flex-wrap gap-2 pt-4 border-t border-[#1c2126]">
+                <div className="flex flex-wrap gap-2 pt-6 border-t border-[#1e2436]">
                   {proj.stack.map((tech, i) => (
                     <span 
                       key={i}
-                      className="text-xs font-mono px-2.5 py-1 rounded bg-[#171a1d] text-[#a4acb7] border border-[#282e35]"
+                      className={`text-xs font-mono px-3 py-1.5 rounded-lg border ${
+                        isDark 
+                          ? 'bg-[#151928] text-slate-300 border-[#2b354d]' 
+                          : 'bg-slate-100 text-slate-700 border-slate-200'
+                      }`}
                     >
                       {tech}
                     </span>
@@ -344,29 +469,29 @@ export default function App() {
       </section>
 
       {/* Experience Timeline */}
-      <section id="experience" className="py-24 border-b border-[#1f2327]">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="mb-16">
-            <span className="text-xs font-mono text-[#dafa9c] uppercase tracking-wider block mb-2">03 / Career Trajectory</span>
-            <h2 className="text-2xl sm:text-4xl font-light tracking-tight text-white">
-              18+ Years of Continuous Execution
+      <section id="experience" className={`py-28 border-b transition-colors duration-300 ${isDark ? 'border-[#1e2436]' : 'border-slate-200'}`}>
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="mb-20">
+            <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#38bdf8] block mb-3">03 / Experience</span>
+            <h2 className={`text-3xl sm:text-5xl font-extrabold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
+              18+ Years of Proven Leadership
             </h2>
           </div>
 
-          <div className="relative border-l border-[#23282f] ml-3 sm:ml-4 space-y-12">
+          <div className="relative border-l-2 border-[#0284c7]/40 ml-4 sm:ml-6 space-y-16">
             {experience.map((exp, idx) => (
-              <div key={idx} className="relative pl-8 sm:pl-10">
-                {/* Node indicator */}
-                <div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#0c0d0e] border-2 border-[#dafa9c]"></div>
+              <div key={idx} className="relative pl-10 sm:pl-12">
+                {/* Glowing Bullet */}
+                <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-[#0284c7] ring-4 ring-[#0284c7]/20 shadow-[0_0_10px_#38bdf8]"></div>
                 
                 <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-2">
-                  <h3 className="text-lg font-normal text-white">
-                    {exp.title} <span className="text-[#dafa9c] font-light">@ {exp.company}</span>
+                  <h3 className={`text-xl sm:text-2xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    {exp.title} <span className="text-[#38bdf8] font-semibold">@ {exp.company}</span>
                   </h3>
-                  <span className="text-xs font-mono text-[#6f7782] sm:text-right mt-1 sm:mt-0">{exp.period}</span>
+                  <span className={`text-xs font-mono font-bold mt-1 sm:mt-0 ${isDark ? 'text-[#8290a3]' : 'text-slate-500'}`}>{exp.period}</span>
                 </div>
-                <div className="text-xs text-[#7e8692] font-mono mb-3">{exp.location}</div>
-                <p className="text-sm text-[#959da7] leading-relaxed max-w-2xl font-light">
+                <div className={`text-sm font-mono mb-4 ${isDark ? 'text-[#7d8b9e]' : 'text-slate-500'}`}>{exp.location}</div>
+                <p className={`text-base sm:text-lg leading-relaxed max-w-3xl ${isDark ? 'text-[#94a3b8]' : 'text-slate-600'}`}>
                   {exp.summary}
                 </p>
               </div>
@@ -376,27 +501,38 @@ export default function App() {
       </section>
 
       {/* Skills Arsenal */}
-      <section id="skills" className="py-24 border-b border-[#1f2327]">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="mb-16">
-            <span className="text-xs font-mono text-[#dafa9c] uppercase tracking-wider block mb-2">04 / Stack</span>
-            <h2 className="text-2xl sm:text-4xl font-light tracking-tight text-white">
-              Technical Arsenal &amp; Disciplines
+      <section id="skills" className={`py-28 border-b transition-colors duration-300 ${isDark ? 'border-[#1e2436]' : 'border-slate-200'}`}>
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="mb-20">
+            <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#38bdf8] block mb-3">04 / Arsenal</span>
+            <h2 className={`text-3xl sm:text-5xl font-extrabold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
+              Skills &amp; Specializations
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {skillsCategories.map((cat, idx) => (
-              <div key={idx} className="p-6 rounded-xl bg-[#121417] border border-[#22272d]">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-6 font-mono flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#dafa9c]"></span>
+              <div 
+                key={idx} 
+                className={`p-8 rounded-3xl border transition-all duration-300 hover:-translate-y-1 ${
+                  isDark 
+                    ? 'bg-[#10141f] border-[#222b40] hover:border-[#38bdf8]/50 shadow-md' 
+                    : 'bg-white border-slate-200 hover:border-sky-400 shadow-sm'
+                }`}
+              >
+                <h3 className={`text-base font-bold uppercase tracking-wider mb-8 font-mono flex items-center gap-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#38bdf8] shadow-[0_0_8px_#38bdf8]"></span>
                   {cat.name}
                 </h3>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2.5">
                   {cat.skills.map((skill, i) => (
                     <span 
                       key={i}
-                      className="px-3 py-1.5 rounded-md text-xs font-mono bg-[#181a1d] text-[#b3bac4] border border-[#262c33] hover:border-[#dafa9c]/40 hover:text-white transition-colors"
+                      className={`px-3.5 py-2 rounded-xl text-xs font-mono font-medium border transition-colors ${
+                        isDark 
+                          ? 'bg-[#151928] text-slate-300 border-[#2a344f] hover:border-[#38bdf8] hover:text-white' 
+                          : 'bg-slate-100 text-slate-700 border-slate-200 hover:border-sky-500 hover:text-sky-900'
+                      }`}
                     >
                       {skill}
                     </span>
@@ -406,71 +542,88 @@ export default function App() {
             ))}
           </div>
 
-          {/* Education strip */}
-          <div className="mt-12 p-6 rounded-xl bg-[#121417] border border-[#22272d]">
-            <h3 className="text-xs font-mono text-[#dafa9c] uppercase tracking-wider mb-4 flex items-center gap-2">
-              <GraduationCap className="w-4 h-4" />
-              <span>Academic Foundation &amp; Credentials</span>
+          {/* Education Strip */}
+          <div className={`mt-16 p-8 sm:p-12 rounded-3xl border ${isDark ? 'bg-[#10141f] border-[#222b40]' : 'bg-white border-slate-200 shadow-sm'}`}>
+            <h3 className="text-sm font-mono font-bold text-[#38bdf8] uppercase tracking-wider mb-6 flex items-center gap-3">
+              <GraduationCap className="w-5 h-5" />
+              <span>Academic Credentials &amp; Verification</span>
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
               <div>
-                <div className="font-medium text-white">BCA, IT Project Management</div>
-                <div className="text-xs text-[#717983] font-mono mt-0.5">MG University · 2013 – 2015</div>
+                <div className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>BCA, IT Project Management</div>
+                <div className={`text-xs font-mono mt-1 ${isDark ? 'text-[#7d8b9e]' : 'text-slate-500'}`}>MG University · 2013 – 2015</div>
               </div>
               <div>
-                <div className="font-medium text-white">Bachelor's Degree, English Literature</div>
-                <div className="text-xs text-[#717983] font-mono mt-0.5">Mumbai University · 2000 – 2005</div>
+                <div className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Bachelor's, English Literature</div>
+                <div className={`text-xs font-mono mt-1 ${isDark ? 'text-[#7d8b9e]' : 'text-slate-500'}`}>Mumbai University · 2000 – 2005</div>
               </div>
               <div>
-                <div className="font-medium text-white">Introduction to Software Engineering</div>
-                <div className="text-xs text-[#717983] font-mono mt-0.5">Verified Professional Credential</div>
+                <div className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Introduction to Software Engineering</div>
+                <div className={`text-xs font-mono mt-1 ${isDark ? 'text-[#7d8b9e]' : 'text-slate-500'}`}>Verified Professional Credential</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Direct Contact & Collaboration Section */}
-      <section id="contact" className="py-24">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="p-8 sm:p-14 rounded-2xl bg-[#121416] border border-[#282f37] relative overflow-hidden">
-            <div className="relative z-10 max-w-2xl">
-              <span className="text-xs font-mono text-[#dafa9c] uppercase tracking-wider block mb-3">05 / Engagement</span>
-              <h2 className="text-3xl sm:text-4xl font-light text-white tracking-tight leading-tight mb-4">
-                Have a web application that needs speed, scale, or architectural leadership?
+      {/* Direct Contact & Collaboration Section with Glowing CTA */}
+      <section id="contact" className="py-28">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className={`p-10 sm:p-20 rounded-3xl border relative overflow-hidden ${
+            isDark 
+              ? 'bg-gradient-to-br from-[#121625] via-[#0d101a] to-[#090b12] border-[#29344d] shadow-[0_0_50px_rgba(2,132,199,0.15)]' 
+              : 'bg-gradient-to-br from-sky-50 via-white to-sky-50 border-sky-200 shadow-xl'
+          }`}>
+            
+            {/* Ambient Nebula in CTA */}
+            {isDark && (
+              <div className="absolute -right-20 -bottom-20 w-96 h-96 rounded-full bg-[#0284c7]/20 blur-[100px] pointer-events-none"></div>
+            )}
+
+            <div className="relative z-10 max-w-3xl">
+              <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#38bdf8] block mb-4">05 / Contact &amp; Hire</span>
+              <h2 className={`text-3xl sm:text-6xl font-black tracking-tight leading-tight mb-6 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                Ready to build something fast, scalable, and exceptional?
               </h2>
-              <p className="text-sm sm:text-base text-[#8f96a1] leading-relaxed mb-8 font-light">
-                Available for select freelance contracts, technical lead roles, and performance audits. Fast responses via email or LinkedIn.
+              <p className={`text-lg sm:text-xl leading-relaxed mb-10 ${isDark ? 'text-[#94a3b8]' : 'text-slate-600'}`}>
+                I am available for select freelance contracts, technical lead roles, and performance consultations. Reach out anytime.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4">
+              {/* High-Impact Animated Action Buttons */}
+              <div className="flex flex-wrap items-center gap-5">
                 <a 
                   href="mailto:devsandeepsawant@gmail.com"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-[#dafa9c] text-[#0c0d0e] font-semibold text-sm hover:bg-[#e6fdb5] transition-all transform active:scale-95 shadow-sm"
+                  className="cta-shimmer group relative inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-[#0284c7] to-[#38bdf8] text-white font-bold text-base shadow-xl shadow-sky-500/30 hover:scale-105 active:scale-95 transition-all"
                 >
-                  <Mail className="w-4 h-4" />
-                  <span>devsandeepsawant@gmail.com</span>
+                  <Mail className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                  <span>Send Email: devsandeepsawant@gmail.com</span>
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
+
                 <a 
                   href="https://www.linkedin.com/in/sandeep-sawant-developer/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-md bg-[#181b1f] border border-[#2e363f] text-white text-sm hover:border-[#dafa9c]/60 transition-colors"
+                  className={`cta-shimmer group inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-base border transition-all hover:scale-105 active:scale-95 ${
+                    isDark 
+                      ? 'bg-[#151a29] border-[#2e3b57] text-white hover:border-[#38bdf8]' 
+                      : 'bg-white border-slate-300 text-slate-800 hover:border-sky-500 shadow-sm'
+                  }`}
                 >
-                  <LinkedinIcon className="w-4 h-4 text-[#dafa9c]" />
-                  <span>Connect on LinkedIn</span>
-                  <ExternalLink className="w-3.5 h-3.5 text-[#7c8490]" />
+                  <LinkedinIcon className="w-5 h-5 text-[#38bdf8] group-hover:scale-110 transition-transform" />
+                  <span>LinkedIn Profile</span>
+                  <ExternalLink className="w-4 h-4 text-[#7d8b9e]" />
                 </a>
               </div>
 
-              <div className="mt-8 flex flex-wrap gap-6 text-xs font-mono text-[#69727e]">
-                <span className="flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-[#dafa9c]" />
+              <div className={`mt-10 flex flex-wrap gap-8 text-xs font-mono ${isDark ? 'text-[#7d8b9e]' : 'text-slate-500'}`}>
+                <span className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-[#38bdf8]" />
                   Kalyan / Thane, Mumbai, India
                 </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#dafa9c]" />
-                  Open to Remote &amp; Global Collaborations
+                <span className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#38bdf8]" />
+                  Open to Remote &amp; Global Contracts
                 </span>
               </div>
             </div>
@@ -478,20 +631,20 @@ export default function App() {
         </div>
       </section>
 
-      {/* High-End Minimal Footer */}
-      <footer className="py-8 border-t border-[#1b1f23] text-xs font-mono text-[#626b75]">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      {/* Footer */}
+      <footer className={`py-12 border-t text-xs font-mono transition-colors duration-300 ${isDark ? 'border-[#1e2436] text-[#6b7787]' : 'border-slate-200 text-slate-500'}`}>
+        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             &copy; {new Date().getFullYear()} Sandeep Sawant. All rights reserved.
           </div>
-          <div className="flex items-center gap-6">
-            <a href="https://github.com/devsandeepsawant-max/portfolio" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-              GitHub Repository
+          <div className="flex items-center gap-8">
+            <a href="https://github.com/devsandeepsawant-max/portfolio" target="_blank" rel="noopener noreferrer" className="hover:text-[#38bdf8] transition-colors">
+              GitHub Repo
             </a>
-            <a href="https://www.linkedin.com/in/sandeep-sawant-developer/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+            <a href="https://www.linkedin.com/in/sandeep-sawant-developer/" target="_blank" rel="noopener noreferrer" className="hover:text-[#38bdf8] transition-colors">
               LinkedIn
             </a>
-            <a href="mailto:devsandeepsawant@gmail.com" className="hover:text-white transition-colors">
+            <a href="mailto:devsandeepsawant@gmail.com" className="hover:text-[#38bdf8] transition-colors">
               Email
             </a>
           </div>

@@ -54,10 +54,10 @@
   50% { opacity: 1; transform: scale(1.3) rotate(45deg); }
 }
 
-/* Realistic Spaceship Crossing Hero Section */
+/* Realistic Spaceship Crossing Hero Section (Slower, Majestic Cruise) */
 @keyframes flySpaceshipRealistic {
   0% {
-    transform: translate(-18vw, 68vh) rotate(24deg) scale(0.9);
+    transform: translate(-25vw, 70vh) rotate(22deg) scale(1.1);
     opacity: 0;
   }
   6% {
@@ -67,37 +67,14 @@
     opacity: 1;
   }
   100% {
-    transform: translate(118vw, -22vh) rotate(20deg) scale(1.4);
+    transform: translate(125vw, -25vh) rotate(19deg) scale(1.7);
     opacity: 0;
   }
 }
 
 .animate-spaceship-real {
-  animation: flySpaceshipRealistic 13s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  animation-delay: 0.5s;
-}
-
-/* Comet Falling from Opposite Side (Top-Right to Bottom-Left) */
-@keyframes cometFall {
-  0% {
-    transform: translate(110vw, -15vh) rotate(-135deg) scale(0.6);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  65% {
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-20vw, 85vh) rotate(-135deg) scale(1.2);
-    opacity: 0;
-  }
-}
-
-.animate-comet {
-  animation: cometFall 9s ease-in-out infinite;
-  animation-delay: 4.5s;
+  animation: flySpaceshipRealistic 24s cubic-bezier(0.35, 0, 0.25, 1) infinite;
+  animation-delay: 0.8s;
 }
 
 /* Engine flame flicker */

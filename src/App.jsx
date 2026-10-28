@@ -256,58 +256,46 @@ export default function App() {
           {/* Realistic High-Detail Spaceship Crossing Hero Section */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden z-20">
             <div className="animate-spaceship-real absolute flex items-center">
-              {/* Spaceship Body & Engine */}
+              {/* Spaceship Body & Engine (Extra Large & High Detail) */}
               <div className="relative">
-                <svg width="76" height="76" viewBox="0 0 64 64" fill="none" className="transform -rotate-45 drop-shadow-[0_0_20px_rgba(56,189,248,0.7)]">
+                <svg width="108" height="108" viewBox="0 0 64 64" fill="none" className="transform -rotate-45 drop-shadow-[0_0_28px_rgba(56,189,248,0.85)]">
                   {/* Outer Main Fuselage */}
-                  <path d="M60 4C50 7 24 18 16 34L26 44C42 36 53 10 60 4Z" fill={isDark ? '#0f172a' : '#ffffff'} stroke={isDark ? '#38bdf8' : '#0284c7'} strokeWidth="2" strokeLinejoin="round" />
+                  <path d="M60 4C50 7 24 18 16 34L26 44C42 36 53 10 60 4Z" fill={isDark ? '#0b1120' : '#ffffff'} stroke={isDark ? '#38bdf8' : '#0284c7'} strokeWidth="2.2" strokeLinejoin="round" />
                   
+                  {/* High-Tech Hull Armor Inset */}
+                  <path d="M48 12L28 26L34 32L54 18Z" fill={isDark ? '#1e293b' : '#f8fafc'} opacity="0.6" />
+
                   {/* Cockpit Canopy Window */}
-                  <path d="M42 16C36 21 33 26 31 31L35 35C40 33 45 30 50 24L42 16Z" fill={isDark ? '#38bdf8' : '#0284c7'} opacity="0.9" />
-                  <path d="M40 18L47 25" stroke="#ffffff" strokeWidth="1" strokeLinecap="round" opacity="0.8" />
+                  <path d="M42 16C36 21 33 26 31 31L35 35C40 33 45 30 50 24L42 16Z" fill={isDark ? '#38bdf8' : '#0284c7'} opacity="0.95" />
+                  <path d="M40 18L47 25" stroke="#ffffff" strokeWidth="1.2" strokeLinecap="round" opacity="0.9" />
                   
                   {/* Upper Aerodynamic Wing */}
-                  <path d="M26 21L10 18L18 29L26 21Z" fill={isDark ? '#1e293b' : '#f1f5f9'} stroke={isDark ? '#38bdf8' : '#0284c7'} strokeWidth="1.5" />
+                  <path d="M26 21L8 17L18 29L26 21Z" fill={isDark ? '#1e293b' : '#f1f5f9'} stroke={isDark ? '#38bdf8' : '#0284c7'} strokeWidth="1.8" />
                   
                   {/* Lower Stabilizer Wing */}
-                  <path d="M39 34L42 50L31 42L39 34Z" fill={isDark ? '#1e293b' : '#f1f5f9'} stroke={isDark ? '#38bdf8' : '#0284c7'} strokeWidth="1.5" />
+                  <path d="M39 34L43 52L31 42L39 34Z" fill={isDark ? '#1e293b' : '#f1f5f9'} stroke={isDark ? '#38bdf8' : '#0284c7'} strokeWidth="1.8" />
                   
-                  {/* Rocket Engine Nozzle */}
-                  <path d="M16 34L12 40L20 48L26 44L16 34Z" fill={isDark ? '#334155' : '#cbd5e1'} stroke={isDark ? '#94a3b8' : '#64748b'} strokeWidth="1.5" />
+                  {/* Rocket Engine Nozzle & Mount */}
+                  <path d="M16 34L11 41L21 49L26 44L16 34Z" fill={isDark ? '#334155' : '#cbd5e1'} stroke={isDark ? '#94a3b8' : '#64748b'} strokeWidth="1.8" />
                   
-                  {/* Ion Thruster Glow Ring */}
-                  <circle cx="16" cy="44" r="3" fill="#38bdf8" />
+                  {/* Dual Ion Thrusters */}
+                  <circle cx="15" cy="42" r="2.5" fill="#38bdf8" />
+                  <circle cx="19" cy="46" r="2.5" fill="#38bdf8" />
                 </svg>
 
                 {/* Plasma Jet Fire Flare with Dynamic Flicker */}
-                <div className="absolute -bottom-2 -left-8 w-14 h-5 rounded-full bg-gradient-to-r from-transparent via-cyan-400 via-amber-400 to-rose-500 blur-[2px] animate-thruster"></div>
-                <div className="absolute -bottom-1 -left-4 w-7 h-3 rounded-full bg-white blur-[1px] animate-pulse"></div>
+                <div className="absolute -bottom-3 -left-12 w-20 h-7 rounded-full bg-gradient-to-r from-transparent via-cyan-400 via-amber-400 to-rose-500 blur-[3px] animate-thruster"></div>
+                <div className="absolute -bottom-1.5 -left-6 w-10 h-4 rounded-full bg-white blur-[1.5px] animate-pulse"></div>
               </div>
 
               {/* Extended Hyperspace Plasma Trail */}
               <div 
-                className={`h-[3px] w-80 -ml-4 rounded-full ${
+                className={`h-[3.5px] w-96 -ml-5 rounded-full ${
                   isDark 
-                    ? 'bg-gradient-to-l from-transparent via-[#38bdf8]/80 to-transparent shadow-[0_0_12px_#38bdf8]' 
-                    : 'bg-gradient-to-l from-transparent via-[#0284c7]/70 to-transparent shadow-[0_0_12px_#0284c7]'
+                    ? 'bg-gradient-to-l from-transparent via-[#38bdf8]/85 to-transparent shadow-[0_0_18px_#38bdf8]' 
+                    : 'bg-gradient-to-l from-transparent via-[#0284c7]/75 to-transparent shadow-[0_0_18px_#0284c7]'
                 }`}
               ></div>
-            </div>
-
-            {/* Falling Comet Streaking from Top-Right to Bottom-Left */}
-            <div className="animate-comet absolute flex items-center">
-              {/* Comet Head Core */}
-              <div className="relative">
-                <div className="w-4 h-4 rounded-full bg-white shadow-[0_0_16px_#38bdf8] flex items-center justify-center">
-                  <div className="w-2 h-2 rounded-full bg-[#38bdf8]"></div>
-                </div>
-              </div>
-              {/* Comet Glowing Tail */}
-              <div className={`h-[3px] w-64 -ml-1 rounded-full ${
-                isDark 
-                  ? 'bg-gradient-to-r from-white via-[#38bdf8]/80 to-transparent shadow-[0_0_14px_rgba(56,189,248,0.7)]' 
-                  : 'bg-gradient-to-r from-[#0284c7] via-[#38bdf8]/70 to-transparent shadow-[0_0_14px_rgba(2,132,199,0.7)]'
-              }`}></div>
             </div>
           </div>
 
